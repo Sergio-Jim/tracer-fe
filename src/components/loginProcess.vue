@@ -41,7 +41,7 @@
                     color="black"
                     scale="0.5"
                   ></vue-loaders>
-                  <div class="py-2" v-else>Authenticate</div>
+                  <div class="py-2 text-red-800" v-else>Authenticate</div>
                 </button>
               </div>
             </div>
@@ -83,7 +83,7 @@
                 w-full
               "
               style="height: 40px"
-              v-on:click="active = true"
+              v-on:click="login"
               type="button"
             >
               <vue-loaders
@@ -131,6 +131,9 @@ export default {
     },
     reloadPage() {
       window.location.reload();
+    },
+    async login() {
+      this.$router.push("/dashboard");
     },
   },
 };
