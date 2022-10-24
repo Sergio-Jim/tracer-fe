@@ -12,7 +12,8 @@ module.exports = {
     extend: {
       colors: {
         // Change with you want it
-        gold: "#ffd700",
+        tracergray: "#9d9d9d",
+        tracergrey: "#c9c9c9",
         "litepie-primary": colors.blue, // color system for light mode
         "litepie-secondary": colors.gray, // color system for dark mode
       },
