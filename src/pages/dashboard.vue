@@ -79,15 +79,18 @@
       </div>
       <div></div>
 
-      <div style="display: flex; margin-top: 30px; margin-bottom: 60px">
+      <div style="display: flex; margin-top: 20px; margin-bottom: 50px">
         <div
           style="
-            height: 60px;
-            width: 60px;
+            height: 40px;
+            width: 40px;
             border-radius: 100%;
-            background-color: black;
+            cursor: pointer;
           "
-        ></div>
+          v-on:click="this.$router.push('/login')"
+        >
+          <img src="@/assets/logout.svg" alt="" />
+        </div>
         <div
           style="
             display: flex;
@@ -96,7 +99,7 @@
             margin-left: 10px;
           "
         >
-          <h4>James</h4>
+          <h4>username232</h4>
           <h4 style="cursor: pointer" v-on:click="this.$router.push('/login')">
             Log out
           </h4>

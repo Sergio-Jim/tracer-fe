@@ -1,8 +1,29 @@
 <template>
   <div style="padding: 20px 30px; height: 100%; overflow-y: scroll">
     <div style="display: flex; flex-direction: row; justify-content: center">
-      <div style="display: flex; flex-direction: row">
-        <span style="padding: 10px; font-size: xx-large">List Client</span>
+      <div
+        style="
+          flex-grow: 1;
+          display: flex;
+          flex-direction: row;
+          margin: 10px;
+          justify-content: space-between;
+        "
+      >
+        <img
+          style="width: 68px; height: 48px; cursor: pointer"
+          src="@/assets/back-button.svg"
+          alt=""
+          onclick="history.back()"
+        />
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <img
+            src="@/assets/TRACER_LOGO_ICON.png"
+            alt=""
+            style="width: 50px; height: 50px"
+          />
+          <span>TRACER</span>
+        </div>
       </div>
     </div>
 
@@ -278,50 +299,19 @@
 
             <!-- Documents -->
             <div style="display: flex; flex-direction: column; margin: 20px 0">
-              <div
-                style="
-                  display: flex;
-                  flex-direction: row;
-                  justify-content: center;
-                "
-              >
-                <span style="margin-bottom: 10px">Documents</span>
-              </div>
-
               <div style="display: flex; flex-direction: column">
-                <div style="display: flex; flex-direction: row">
-                  <div
-                    style="
-                      display: flex;
-                      flex-direction: column;
-                      margin: 0 20px;
-                    "
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                  "
+                >
+                  <span
+                    class="cursor-pointer"
+                    v-on:click="viewModal = !viewModal"
+                    >View Documents</span
                   >
-                    <span class="text-xs">ID COPY | DRIVERS LICENSE</span>
-                    <span class="text-xs">OTHER DOCUMENTS</span>
-                  </div>
-                  <div style="display: flex; flex-direction: column">
-                    <div class="flex items-center justify-between">
-                      <button
-                        class="
-                          bg-tracergrey
-                          transition-color
-                          duration-700
-                          transform
-                          hover:bg-tracergray
-                          border border-black
-                          text-black
-                          px-4
-                          w-full
-                        "
-                        style="height: 40px"
-                        v-on:click="uploadDocs"
-                        type="button"
-                      >
-                        <div class="text-xs">UPLOAD DOCUMENTS</div>
-                      </button>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -358,31 +348,34 @@
                     color="black"
                     scale="0.5"
                   ></vue-loaders>
-                  <div class="py-2 text-red-800" v-else>LIST CLIENT</div>
+                  <div class="py-2 text-red-800" v-else>EDIT CLIENT</div>
                 </button>
               </div>
             </div>
           </form>
           <div>
             <span style="font-size: 10px"
-              >BY LISTING THE CLIENT, YOU AGREE THAT ALL THE INFORMATION
+              >BY EDITING THE CLIENT, YOU AGREE THAT ALL THE INFORMATION
               PROVIDED IS TRUE</span
             >
+          </div>
+          <div>
+            <span style="font-size: 10px">Last Edit By: username232</span>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <otpmodal v-bind:viewModal="viewModal" @hide-modal="viewModal = false" />
+  <viewDocuments v-bind:viewModal="viewModal" @hide-modal="viewModal = false" />
 </template>
 
 <script>
 import { ref } from "vue";
 import LitepieDatepicker from "litepie-datepicker";
-import otpmodal from "@/components/otpmodal.vue";
+import ViewDocuments from "@/components/viewDocuments.vue";
 
 export default {
-  name: "ListClient",
+  name: "ClientProfile",
   data() {
     return {
       showText: 0,
@@ -391,7 +384,7 @@ export default {
   },
   components: {
     LitepieDatepicker,
-    otpmodal,
+    ViewDocuments,
   },
   setup() {
     const dateValue = ref([]);

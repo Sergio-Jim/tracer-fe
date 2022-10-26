@@ -4,16 +4,50 @@
       <div id="enter_credentials">
         <form>
           <div style="margin-top: 50px">
-            <input type="text" v-model="username" placeholder="Username" />
+            <input
+              type="text"
+              v-model="username"
+              placeholder="Username"
+              class="
+                shadow
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                mb-3
+                leading-tight
+                focus:outline-none focus:shadow-outline
+              "
+            />
           </div>
 
           <div style="margin-top: 50px">
-            <input type="password" v-model="password" placeholder="Password" />
+            <input
+              type="password"
+              v-model="password"
+              placeholder="Password"
+              class="
+                shadow
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                mb-3
+                leading-tight
+                focus:outline-none focus:shadow-outline
+              "
+            />
           </div>
 
           <div
             style="margin-top: 50px"
-            class="flex items-center justify-between border-2"
+            class="flex items-center justify-between"
           >
             <div
               :style="{
@@ -65,10 +99,27 @@
       <div id="enter_otp" style="display: none">
         <form>
           <div style="margin-top: 50px">
-            <input type="text" v-model="otp" placeholder="OTP" />
+            <input
+              type="text"
+              v-model="otp"
+              placeholder="OTP"
+              class="
+                shadow
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                mb-3
+                leading-tight
+                focus:outline-none focus:shadow-outline
+              "
+            />
           </div>
 
-          <div style="margin: 50px 0" class="flex items-center justify-between">
+          <div style="margin: 10px 0" class="flex items-center justify-between">
             <button
               class="
                 bg-tracergrey

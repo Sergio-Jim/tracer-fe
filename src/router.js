@@ -4,6 +4,7 @@ import Dashboard from "./pages/dashboard";
 import DashboardMain from "./pages/dashboard/index.vue";
 import ListClient from "./pages/dashboard/listClient.vue";
 import Search from "./pages/dashboard/search.vue";
+import ClientProfile from "./pages/dashboard/clientProfile.vue";
 import Reports from "./pages/dashboard/reports.vue";
 
 const routes = [
@@ -34,6 +35,10 @@ const routes = [
       {
         path: "search",
         component: Search,
+      },
+      {
+        path: "clientProfile",
+        component: ClientProfile,
       },
       {
         path: "reports",
