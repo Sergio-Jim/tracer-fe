@@ -4,23 +4,63 @@
       <div id="enter_credentials">
         <form>
           <div style="margin-top: 50px">
-            <input type="text" v-model="username" placeholder="Username" />
+            <input
+              type="text"
+              v-model="username"
+              placeholder="Username"
+              class="
+                shadow
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                mb-3
+                leading-tight
+                focus:outline-none focus:shadow-outline
+              "
+            />
           </div>
 
           <div style="margin-top: 50px">
-            <input type="password" v-model="password" placeholder="Password" />
+            <input
+              type="password"
+              v-model="password"
+              placeholder="Password"
+              class="
+                shadow
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                mb-3
+                leading-tight
+                focus:outline-none focus:shadow-outline
+              "
+            />
           </div>
 
-          <div style="margin-top: 50px" class="flex items-center justify-between border-2">
-            <div style="{
-              height: '50px',
-              width: '100%',
-              display: 'flex',
-              'background-image': `url(${require('@/assets/fingerprint.png')})`,
-              'background-repeat': `no-repeat`,
-              'background-position': `center center`,
-            }">
-              <div style="
+          <div
+            style="margin-top: 50px"
+            class="flex items-center justify-between"
+          >
+            <div
+              :style="{
+                height: '50px',
+                width: '100%',
+                display: 'flex',
+                'background-image': `url(${require('@/assets/fingerprint.png')})`,
+                'background-repeat': `no-repeat`,
+                'background-position': `center center`,
+              }"
+            >
+              <div
+                style="
                   display: flex;
                   flex-direction: row;
                   width: 100%;
@@ -53,11 +93,29 @@
           <span>OTP has been sent to {{ this.phone_number }}</span>
 
           <div style="margin-top: 50px">
-            <input type="text" v-model="otp" placeholder="OTP" />
+            <input
+              type="text"
+              v-model="otp"
+              placeholder="OTP"
+              class="
+                shadow
+                appearance-none
+                border
+                rounded
+                w-full
+                py-2
+                px-3
+                text-gray-700
+                mb-3
+                leading-tight
+                focus:outline-none focus:shadow-outline
+              "
+            />
           </div>
 
           <div style="margin: 50px 0" class="flex items-center justify-between">
-            <button class="
+            <button
+              class="
                 bg-tracergrey
                 transition-color
                 duration-700

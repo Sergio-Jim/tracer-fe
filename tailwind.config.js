@@ -14,6 +14,7 @@ module.exports = {
         // Change with you want it
         tracergray: "#9d9d9d",
         tracergrey: "#c9c9c9",
+        searchred: "#ca5757",
         "litepie-primary": colors.blue, // color system for light mode
         "litepie-secondary": colors.gray, // color system for dark mode
       },
