@@ -24,16 +24,105 @@
 
         <!-- body -->
         <div style="padding: 5px 20px">
-          file 1 <br />
-          file 2
+          <div
+            style="
+              margin-top: 20px;
+              margin-left: 20px;
+              flex-basis: 100%;
+              border: 1px solid;
+              border-color: gray;
+              max-height: 300px;
+              overflow-y: scroll;
+            "
+          >
+            <table
+              class="
+                w-full
+                text-sm text-left text-gray-500
+                dark:text-gray-400
+                table-auto
+                overflow-scroll
+              "
+            >
+              <thead
+                class="
+                  text-xs text-gray-700
+                  uppercase
+                  bg-gray-50
+                  dark:bg-gray-700 dark:text-gray-400
+                "
+              >
+                <tr>
+                  <th scope="col" class="px-6 py-4">File Name</th>
+                  <th scope="col" class="px-6 py-4">File Type</th>
+                  <th scope="col" class="px-2 py-4">Date Uploaded</th>
+                  <th scope="col" class="px-2 py-4"></th>
+                  <th scope="col" class="px-2 py-4">
+                    <span class="sr-only">Edit</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="
+                    bg-white
+                    border-b
+                    dark:bg-gray-800 dark:border-gray-700
+                  "
+                >
+                  <th
+                    scope="row"
+                    class="
+                      px-6
+                      py-4
+                      font-medium
+                      text-gray-900
+                      dark:text-white
+                      whitespace-nowrap
+                    "
+                  >
+                    Drivers License.pdf
+                  </th>
+                  <td class="px-6 py-4">PDF</td>
+                  <td class="px-2 py-4">10/27/2022 - 02:03:42</td>
+                  <td class="px-2 py-4">
+                    <img
+                      src="@/assets/cancel_icon.svg"
+                      class="cursor-pointer"
+                    />
+                  </td>
+                  <td class="px-6 py-4 text-right"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            style="
+              border: 1px solid;
+              border-top: 0px;
+              border-color: gray;
+              margin-left: 20px;
+              margin-bottom: 10px;
+            "
+          >
+            <div
+              class="
+                flex flex-row
+                justify-center
+                w-full
+                text-sm text-left text-gray-500
+                dark:text-gray-400
+                table-auto
+              "
+            >
+              <span style="font-size: 10px">Last Uploaded By: username232</span>
+            </div>
+          </div>
         </div>
 
         <!-- footer -->
-        <div
-          style="padding: 5px 20px"
-          class="flex flex-row border-2 justify-end"
-        >
-          <div class="flex flex-row justify-end mt-4">
+        <div style="padding: 5px 20px" class="flex flex-row">
+          <div class="flex flex-row">
             <button
               class="
                 bg-white
@@ -46,7 +135,7 @@
                 mx-1
                 border border-gray-400
                 rounded-lg
-                w-2/12
+                w-full
                 mb-3
               "
               style="height: 50px"
@@ -66,20 +155,12 @@
                 mx-1
                 border border-gray-400
                 rounded-lg
-                w-2/12
+                w-full
                 mb-3
               "
-              style="height: 50px"
-              v-on:click="saveUpload"
+              v-on:click="uploadDocument"
             >
-              <vue-loaders
-                v-if="this.loading"
-                name="line-scale"
-                color="white"
-                scale="0.5"
-              >
-              </vue-loaders>
-              <div class="py-2" v-else>Save</div>
+              <div>Upload Documents</div>
             </button>
           </div>
         </div>
