@@ -24,7 +24,7 @@
             />
           </div>
 
-          <div style="margin-top: 50px">
+          <div style="margin-top: 5px">
             <input
               type="password"
               v-model="password"
@@ -46,7 +46,7 @@
           </div>
 
           <div
-            style="margin-top: 50px"
+            style="margin-top: 10px"
             class="flex items-center justify-between"
           >
             <div
@@ -66,23 +66,31 @@
                   width: 100%;
                   justify-content: center;
                   align-items: center;
-                ">
+                "
+              >
                 <button style="height: 40px" v-on:click="login" type="button">
-                  <vue-loaders v-if="this.isLoading" name="line-scale" color="black" scale="0.5"></vue-loaders>
+                  <vue-loaders
+                    v-if="this.isLoading"
+                    name="line-scale"
+                    color="black"
+                    scale="0.5"
+                  ></vue-loaders>
                   <div class="py-2 text-red-800" v-else>Authenticate</div>
                 </button>
               </div>
             </div>
           </div>
         </form>
-        <div style="
+        <div
+          style="
             display: flex;
             flex-direction: column;
             width: 100%;
             justify-content: center;
             align-items: center;
-            margin: 50px 0;
-          ">
+            margin: 10px 0;
+          "
+        >
           <span>Unable to login? Contact Us</span>
           <span>wow.co.na | +264 81 455 5528</span>
         </div>
@@ -126,19 +134,30 @@
                 px-4
                 rounded-lg
                 w-full
-              " style="height: 40px" v-on:click="verifyOtp" type="button">
-              <vue-loaders v-if="this.isLoading" name="line-scale" color="black" scale="0.5"></vue-loaders>
+              "
+              style="height: 40px"
+              v-on:click="verifyOtp"
+              type="button"
+            >
+              <vue-loaders
+                v-if="this.isLoading"
+                name="line-scale"
+                color="black"
+                scale="0.5"
+              ></vue-loaders>
               <div class="py-2" v-else>Log in</div>
             </button>
           </div>
 
-          <div style="
+          <div
+            style="
               display: flex;
               flex-direction: row;
               width: 100%;
               justify-content: center;
               align-items: center;
-            ">
+            "
+          >
             <span @click="reloadPage"> Can't get PIN? </span>
           </div>
         </form>
@@ -147,7 +166,6 @@
   </main>
 </template>
 <script>
-
 import gql from "graphql-tag";
 import { useToast } from "vue-toastification";
 
@@ -167,7 +185,7 @@ export default {
       username: "",
       password: "",
       phone_number: "",
-      otp: 0
+      otp: 0,
     };
   },
   methods: {
@@ -205,22 +223,17 @@ export default {
         .then(({ status, message }) => {
           this.isLoading = false;
           if (status) {
-
             document.getElementById("enter_otp").style.display = "block";
             document.getElementById("enter_credentials").style.display = "none";
             this.phone_number = message;
-
           } else {
-
             this.toast.error(message);
-
           }
         })
         .catch((err) => {
           this.isLoading = false;
           this.toast.error(err.message || "Something went wrong.");
         });
-
     },
     async verifyOtp() {
       this.isLoading = true;
@@ -251,10 +264,8 @@ export default {
           if (status) {
             localStorage.setItem("token", token);
             this.$router.push("/dashboard");
-
           } else {
             this.toast.error(message);
-
           }
         })
         .catch((err) => {
@@ -268,5 +279,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>
