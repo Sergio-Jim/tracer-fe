@@ -183,6 +183,7 @@
                       type="checkbox"
                       id="is_overspeeding"
                       name="is_overspeeding"
+                      v-model="is_overspeeding"
                       value="overspeeding"
                     />
                     <span class="text-sm">OVERSPEEDING</span>
@@ -220,6 +221,7 @@
                       type="checkbox"
                       id="is_mismangement"
                       name="is_mismangement"
+                      v-model="is_mismangement"
                       value="mismangement"
                     />
                     <span class="text-sm">MISMANAGEMENT OF VEHICLE</span>
@@ -257,6 +259,7 @@
                       type="checkbox"
                       id="is_unlawful"
                       name="is_unlawful"
+                      v-model="is_unlawful"
                       value="unlawful"
                     />
                     <span class="text-sm">UNLAWFUL USE OF VEHICLE</span>
@@ -286,12 +289,8 @@
                 <span class="text-xs">APPROXIMATE DATE OF OFFENSE</span>
                 <div style="display: flex; flex-direction: row">
                   <div class="w-3/5">
-                    <litepie-datepicker
-                      :formatter="formatter"
-                      :auto-apply="false"
-                      as-single
-                      v-model="dateValue"
-                    ></litepie-datepicker>
+                
+                    <input type="date"  v-model="date"/>
                   </div>
                 </div>
               </div>
@@ -315,8 +314,12 @@
                 </div>
               </div>
             </div>
-
             <!-- upload button -->
+
+            <div class="text-xs">
+                          <input type="file" id="files" class="hidden"  @change="uploadPhoto" />
+                          UPLOAD DOCUMENTS
+                        </div>
             <div
               :style="{
                 margin: '10px 0',
@@ -339,7 +342,7 @@
               >
                 <button
                   style="height: 40px"
-                  v-on:click="viewModal = !viewModal"
+                  v-on:click="updateClient"
                   type="button"
                 >
                   <vue-loaders
@@ -366,29 +369,43 @@
       </div>
     </div>
   </div>
-  <viewDocuments v-bind:viewModal="viewModal" @hide-modal="viewModal = false" />
+  <viewDocuments v-bind:fullName = "fullName" v-bind:document = "document" v-bind:viewModal="viewModal" @hide-modal="viewModal = false" />
 </template>
 
 <script>
 import { ref } from "vue";
-import LitepieDatepicker from "litepie-datepicker";
+import gql from "graphql-tag";
+// import LitepieDatepicker from "litepie-datepicker";
 import ViewDocuments from "@/components/viewDocuments.vue";
 
 export default {
   name: "ClientProfile",
+
   data() {
     return {
       showText: 0,
       viewModal: false,
+      fullName: "",
+      idNumber:"",
+      drivingLicenseNo:"",
+      is_overspeeding:"",
+      overspeeding_comments:"",
+      is_mismangement:"",
+      mismangement_comments:"",
+      is_unlawful:"",
+      unlawfulness_comments:"",
+      idoffense: [],
+      date:"2022-10-12",
+      document: []
     };
   },
   components: {
-    LitepieDatepicker,
+    // LitepieDatepicker,
     ViewDocuments,
   },
   setup() {
-    const dateValue = ref([]);
-    const formatter = ref({
+    var dateValue = ref([]);
+    var formatter = ref({
       date: "DD MMMM YYYY",
       month: "MMMM",
     });
@@ -398,6 +415,138 @@ export default {
       formatter,
     };
   },
+  created() {
+    this.$apollo
+        .query({
+          // Query
+          query: gql`
+            query getOffenseById (
+              $id: String
+            ){
+              getOffenseById (
+                id: $id
+              ) {
+                fullname
+                idnumber
+                profile_picture
+                driving_licence_number
+                offense {
+                  idoffense
+                  date_of_offense
+                  offense_type
+                  comment
+                }
+                documents {
+                  document_name
+                }
+              }
+            }
+          `,
+          // Parameters
+          variables: {
+            id:  this.$route.query.id,
+          },
+        })
+        .then(({ data }) => {
+          this.isLoading = false
+          var client = data.getOffenseById
+          this.fullName = client.fullname
+          this.idNumber = client.idnumber
+          this.drivingLicenseNo = client.driving_licence_number
+          this.date = client.offense[0] === null ? client.offense[0].date_of_offense : this.date
+          this.document = client.documents 
+
+          client.offense.map( ( offense ) => {
+               this.idoffense.push( offense.idoffense)
+              if ( offense.offense_type === "overspeeding" ) {
+                 this.is_overspeeding = true
+                 this.overspeeding_comments = offense.comment
+              }
+
+              if ( offense.offense_type === "mismanagement" ) {
+                 this.is_mismangement = true
+                 this.mismangement_comments = offense.comment
+              }
+
+              if ( offense.offense_type === "unlawfulness" ) {
+                 this.is_unlawful = true
+                 this.unlawfulness_comments = offense.comment
+              }
+          })
+
+
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.toast.error(err.message || "Something went wrong", {
+            timeout: 2000,
+          });
+        });
+  },
+  methods: {
+   async updateClient() {
+    console.log( this.dateValue[0] );
+    this.isLoading = true;
+      this.$apollo
+        .mutate({
+          // Query
+          mutation: gql`
+            mutation updateOffence(
+                       $idclients: String!
+                       $fullname: String!,
+                       $idnumber: String!,
+                       $profile_picture:  String!
+                       $driving_licence_number: String!
+                       $offenses: [ offense ]
+                       $documents: [ document ]
+                    ) {
+                      updateOffence(
+                      fullname: $fullname,
+                      idnumber: $idnumber,
+                      profile_picture: $profile_picture,
+                      driving_licence_number: $driving_licence_number,
+                      offenses: $offenses
+                      documents: $documents
+                      idclients: $idclients
+                    ) 
+                  }
+          `,
+          // Parameters
+          variables: {
+              idclients: this.$route.query.id ,
+              fullname: this.fullName,
+              idnumber: this.idNumber,
+              profile_picture: "",
+              driving_licence_number: this.drivingLicenseNo,
+              offenses: [ 
+                { idoffense: this.idoffense[0] , date_of_offense: this.dateValue[0] , offense_type: "overspeeding" , comment: this.overspeeding_comments },
+                { idoffense: this.idoffense[1] , date_of_offense: this.dateValue[0] , offense_type: "mismanagement" , comment: this.mismangement_comments },
+                { idoffense: this.idoffense[2] , date_of_offense: this.dateValue[0] , offense_type: "unlawfulness" , comment: this.unlawfulness_comments }
+              ],
+              documents: this.documents,
+          },
+        })
+        .then(({ data }) => {
+          this.toast.success( this.fullName + " updated succesfully");
+          return data.updateOffence;
+        })
+        .then(({ message }) => {
+
+            this.toast.error(" Failed to update information for " + this.fullName );
+
+          
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.toast.error( "Oops! network error refresh page and try again.");
+        });
+
+   }, 
+   async uploadPhoto({ target }) {
+       this.documents.push( { file : target.files[0]} )
+   }
+  }
+
 };
 </script>
 

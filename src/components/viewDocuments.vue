@@ -16,16 +16,16 @@
         <!-- header -->
         <div style="padding: 5px 20px" class="flex flex-row border-2">
           <div>
-            <span>Client Name</span>
-            <div>99042600652</div>
+            <span>Client Name: </span>
+            <span> {{ fullName }}</span>
           </div>
-          <span>Uploaded Documents</span>
+         
         </div>
 
         <!-- body -->
-        <div style="padding: 5px 20px">
-          file 1 <br />
-          file 2
+        <div style="padding: 5px 20px" v-for="dc in document"  :key="dc.id">
+          <a :href=" dc.document_name " target="_blank" >  {{ dc.document_name.split('/').pop() }} </a> <hr />
+
         </div>
 
         <!-- footer -->
@@ -95,7 +95,10 @@
 <script>
 export default {
   name: "viewDocuments",
-  props: { viewModal: { type: Boolean } },
+  props: { viewModal: { type: Boolean } , 
+           document: { type: Object } ,
+           fullName: { type: String }
+          },
   data() {
     return {};
   },

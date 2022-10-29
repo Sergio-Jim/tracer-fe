@@ -67,10 +67,12 @@ const routes = [
       {
         path: "search",
         component: Search,
+        props: true
       },
       {
         path: "clientProfile",
         component: ClientProfile,
+        props: true
       },
       {
         path: "reports",

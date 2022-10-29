@@ -162,6 +162,7 @@
                       type="checkbox"
                       id="is_overspeeding"
                       name="is_overspeeding"
+                      v-model="is_overspeeding"
                       value="overspeeding"
                     />
                     <span class="text-sm">OVERSPEEDING</span>
@@ -199,6 +200,7 @@
                       type="checkbox"
                       id="is_mismangement"
                       name="is_mismangement"
+                      v-model="is_mismangement"
                       value="mismangement"
                     />
                     <span class="text-sm">MISMANAGEMENT OF VEHICLE</span>
@@ -236,6 +238,7 @@
                       type="checkbox"
                       id="is_unlawful"
                       name="is_unlawful"
+                      v-model="is_unlawful"
                       value="unlawful"
                     />
                     <span class="text-sm">UNLAWFUL USE OF VEHICLE</span>
@@ -315,10 +318,14 @@
                           w-full
                         "
                         style="height: 40px"
-                        v-on:click="uploadDocs"
                         type="button"
+                        onclick="document.getElementById('files').click()"
                       >
-                        <div class="text-xs">UPLOAD DOCUMENTS</div>
+                      
+                        <div class="text-xs">
+                          <input type="file" id="files" class="hidden"  @change="uploadPhoto" />
+                          UPLOAD DOCUMENTS
+                        </div>
                       </button>
                     </div>
                   </div>
@@ -328,7 +335,7 @@
 
             <!-- upload button -->
             <div
-              :style="{
+              style="{
                 margin: '10px 0',
                 height: '50px',
                 width: '100%',
@@ -349,7 +356,7 @@
               >
                 <button
                   style="height: 40px"
-                  v-on:click="viewModal = !viewModal"
+                  v-on:click="createClient"
                   type="button"
                 >
                   <vue-loaders
@@ -373,11 +380,13 @@
       </div>
     </div>
   </div>
-  <otpmodal v-bind:viewModal="viewModal" @hide-modal="viewModal = false" />
+  <!-- <otpmodal v-bind:viewModal="viewModal" @hide-modal="viewModal = false" /> -->
 </template>
 
 <script>
 import { ref } from "vue";
+import gql from "graphql-tag";
+import { useToast } from "vue-toastification";
 import LitepieDatepicker from "litepie-datepicker";
 import otpmodal from "@/components/otpmodal.vue";
 
@@ -387,13 +396,25 @@ export default {
     return {
       showText: 0,
       viewModal: false,
+      fullName:"",
+      idNumber:"",
+      drivingLicenseNo:"",
+      is_overspeeding:"",
+      overspeeding_comments:"",
+      is_mismangement:"",
+      mismangement_comments:"",
+      is_unlawful:"",
+      unlawfulness_comments:"",
+      documents: []
     };
   },
   components: {
     LitepieDatepicker,
-    otpmodal,
+    //otpmodal,
   },
   setup() {
+    const toast = useToast();
+
     const dateValue = ref([]);
     const formatter = ref({
       date: "DD MMMM YYYY",
@@ -403,8 +424,69 @@ export default {
     return {
       dateValue,
       formatter,
+      toast
     };
   },
+  methods: {
+   async createClient() {
+    console.log( this.dateValue[0] );
+    this.isLoading = true;
+      this.$apollo
+        .mutate({
+          // Query
+          mutation: gql`
+            mutation createOffence(
+                       $fullname: String!,
+                       $idnumber: String!,
+                       $profile_picture:  String!
+                       $driving_licence_number: String!
+                       $offenses: [ offense ]
+                       $documents: [ document ]
+                    ) {
+                     createOffence(
+                      fullname: $fullname,
+                      idnumber: $idnumber,
+                      profile_picture: $profile_picture,
+                      driving_licence_number: $driving_licence_number,
+                      offenses: $offenses
+                      documents: $documents
+                    ) 
+                  }
+          `,
+          // Parameters
+          variables: {
+              fullname: this.fullName,
+              idnumber: this.idNumber,
+              profile_picture: "",
+              driving_licence_number: this.drivingLicenseNo,
+              offenses: [ 
+                { date_of_offense: this.dateValue[0] , offense_type: "overspeeding" , comment: this.overspeeding_comments },
+                { date_of_offense: this.dateValue[0] , offense_type: "mismanagement" , comment: this.mismangement_comments },
+                { date_of_offense: this.dateValue[0] , offense_type: "unlawfulness" , comment: this.unlawfulness_comments }
+              ],
+              documents: this.documents,
+          },
+        })
+        .then(({ data }) => {
+          this.toast.success( this.fullName + " created succesfully.");
+          return data.createOffence;
+        })
+        .then(({ message }) => {
+
+            this.toast.error(" Failed to create client: " + this.fullName );
+
+          
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.toast.error( "Oops! network error refresh page and try again.");
+        });
+
+   }, 
+   async uploadPhoto({ target }) {
+       this.documents.push( { file : target.files[0]} )
+   }
+  }
 };
 </script>
 
