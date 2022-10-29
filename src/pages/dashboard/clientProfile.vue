@@ -375,7 +375,7 @@
 <script>
 import { ref } from "vue";
 import gql from "graphql-tag";
-// import LitepieDatepicker from "litepie-datepicker";
+import { useToast } from "vue-toastification";
 import ViewDocuments from "@/components/viewDocuments.vue";
 
 export default {
@@ -404,6 +404,9 @@ export default {
     ViewDocuments,
   },
   setup() {
+        // Get toast interface
+    const toast = useToast();
+
     var dateValue = ref([]);
     var formatter = ref({
       date: "DD MMMM YYYY",
@@ -413,6 +416,7 @@ export default {
     return {
       dateValue,
       formatter,
+      toast
     };
   },
   created() {

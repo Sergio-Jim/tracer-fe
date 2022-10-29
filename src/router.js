@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "./pages/login.vue";
+import Register from "./pages/register.vue";
 import Dashboard from "./pages/dashboard";
 import DashboardMain from "./pages/dashboard/index.vue";
 import ListClient from "./pages/dashboard/listClient.vue";
@@ -9,17 +10,17 @@ import Reports from "./pages/dashboard/reports.vue";
 import axios from "axios";
 
 let headers = {
-  'Content-Type':'application/json',
-}
+  "Content-Type": "application/json",
+};
 
-function setToken () {
-  if(localStorage.getItem('token')){
+function setToken() {
+  if (localStorage.getItem("token")) {
     headers = {
-      'Authorization':`Bearer ${localStorage.getItem('token')}`,
-      'Content-Type':'application/json',
-    }
-  }  
-}    
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    };
+  }
+}
 
 const routes = [
   {
@@ -33,22 +34,30 @@ const routes = [
     props: true,
   },
   {
+    path: "/register",
+    name: "register",
+    component: Register,
+    props: true,
+  },
+  {
     path: "/dashboard",
     name: "dashboard",
     beforeEnter: (to, from, next) => {
-      setToken()
+      setToken();
       if (localStorage.getItem("token") !== null) {
         axios({
-          method:'GET',
+          method: "GET",
           headers,
-          url: process.env.NODE_ENV == 'production'? "" : "http://localhost:4000",
-        }).then((res)=>{
-          if(res.data.success)
-            next()
-          next({ name: 'login'})
-        }).catch((err)=>{
-          console.log(err, ' uuuuuuu')
+          url:
+            process.env.NODE_ENV == "production" ? "" : "http://localhost:4000",
         })
+          .then((res) => {
+            if (res.data.success) next();
+            next({ name: "login" });
+          })
+          .catch((err) => {
+            console.log(err, " uuuuuuu");
+          });
       } else {
         next({ name: "login" });
       }
