@@ -143,7 +143,10 @@
                   rounded-lg
                   w-full
                 "
+                v-on:click="createUser"
                 style="height: 40px"
+                type="button"
+
               >
                 <vue-loaders
                   v-if="this.isLoading"
@@ -200,6 +203,53 @@ export default {
       phoneNumber: "",
     };
   },
+  methods: {
+   async createUser() {
+    const PNF = require('google-libphonenumber').PhoneNumberFormat;
+    const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
+    const number = phoneUtil.parseAndKeepRawInput( this.phoneNumber, 'NA');
+    this.isLoading = true;
+      this.$apollo
+        .mutate({
+          // Query
+          mutation: gql`
+            mutation createUser(
+                       $username: String!,
+                       $email: String!,
+                       $company_name:  String!
+                       $phone_number: String!
+                    ) {
+                      createUser(
+                      username: $username,
+                      email: $email,
+                      company_name: $company_name,
+                      phone_number: $phone_number,
+                    ) 
+                  }
+          `,
+          // Parameters
+          variables: {
+              username: this.username,
+              email: this.email,
+              company_name: this.companyName,
+              phone_number: `+${number.getCountryCode()}${number.getNationalNumber()}`
+          },
+        })
+        .then(({ data }) => {
+          return data.createUser;
+        })
+        .then(({ message }) => {
+          this.toast.success( this.username + " created succesfully.");
+          this.$router.push("/login");
+          
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.toast.error( "Oops! network error refresh page and try again.");
+        });
+
+   }
+  }
 };
 </script>
 

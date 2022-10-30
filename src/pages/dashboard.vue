@@ -99,7 +99,7 @@
             margin-left: 10px;
           "
         >
-          <h4>username232</h4>
+          <h4>{{ localStorage.getItem("username" ) }}</h4>
           <h4 style="cursor: pointer" v-on:click="this.$router.push('/login')">
             Log out
           </h4>

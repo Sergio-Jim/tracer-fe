@@ -259,9 +259,10 @@ export default {
           console.log(data);
           return data.verifyOtp;
         })
-        .then(({ token, status, message }) => {
+        .then(({ username , token , status, message }) => {
           this.isLoading = false;
           if (status) {
+            localStorage.setItem("username", username);
             localStorage.setItem("token", token);
             this.$router.push("/dashboard");
           } else {

@@ -462,7 +462,7 @@ export default {
 
           client.offense.map( ( offense ) => {
                this.idoffense.push( offense.idoffense)
-               console.log( offense.comment )
+              
               if ( offense.comment !== "" ) {
 
                   if ( offense.offense_type === "overspeeding" ) {
