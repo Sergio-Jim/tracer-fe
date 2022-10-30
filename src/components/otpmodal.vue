@@ -166,8 +166,6 @@ export default {
           this.isLoading = false;
           if (status) {
             this.$parent.createClient();
-            //this.$root.$emit("createClient") 
-            //this.$router.push("/dashboard");
           } else {
             this.toast.error(message);
           }
