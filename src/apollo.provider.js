@@ -7,7 +7,7 @@ import { createUploadLink } from "apollo-upload-client";
 const httpLink = createUploadLink({
   uri:
     process.env.NODE_ENV == "production"
-      ? "https://tracer-api-xjm95.ondigitalocean.app/"
+      ? "https://tracer-api-xjm95.ondigitalocean.app/graphql"
       : "http://localhost:4000/graphql",
 });
 
