@@ -99,7 +99,7 @@
             margin-left: 10px;
           "
         >
-          <h4>{{ localStorage.getItem("username" ) }}</h4>
+          <h4>{{ username }}</h4>
           <h4 style="cursor: pointer" v-on:click="this.$router.push('/login')">
             Log out
           </h4>
@@ -116,6 +116,11 @@
 <script>
 export default {
   name: "Launchpad",
+  data() {
+    return {
+      username : localStorage.getItem('username' ) 
+    }
+  }
 };
 </script>
 

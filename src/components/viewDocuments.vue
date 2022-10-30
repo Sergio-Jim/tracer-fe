@@ -62,7 +62,7 @@
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody   v-for="dc in document"  :key="dc.id" >
                 <tr
                   class="
                     bg-white
@@ -81,15 +81,15 @@
                       whitespace-nowrap
                     "
                   >
-                    Drivers License.pdf
+                  <a :href=" dc.document_name " target="_blank" >  {{ dc.document_name.split('/').pop() }} </a> 
                   </th>
-                  <td class="px-6 py-4">PDF</td>
-                  <td class="px-2 py-4">10/27/2022 - 02:03:42</td>
+                  <td class="px-6 py-4">{{ dc.document_name.split('.').pop() }}</td>
+                  <td class="px-2 py-4">{{ dc.created }}</td>
                   <td class="px-2 py-4">
-                    <img
+                    <!-- <img
                       src="@/assets/cancel_icon.svg"
                       class="cursor-pointer"
-                    />
+                    /> -->
                   </td>
                   <td class="px-6 py-4 text-right"></td>
                 </tr>
@@ -158,9 +158,12 @@
                 w-full
                 mb-3
               "
-              v-on:click="uploadDocument"
+              onclick="document.getElementById('files').click()"
             >
-              <div>Upload Documents</div>
+              <div>
+                <input type="file" id="files" class="hidden"  @change="uploadDocuments" />
+                
+                Upload Documents</div>
             </button>
           </div>
         </div>
@@ -174,6 +177,8 @@
 </template>
 
 <script>
+import gql from "graphql-tag";
+
 export default {
   name: "viewDocuments",
   props: { viewModal: { type: Boolean } , 
@@ -186,6 +191,36 @@ export default {
   methods: {
     reloadPage() {
       window.location.reload();
+    },
+    async uploadDocuments({ target }) {
+
+      this.loading = true;
+      await this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation uploadDocument(
+                 $file: Upload!
+                 $id: String
+                 ) {
+              uploadDocument(file: $file, 
+              id:$id)
+            }
+          `,
+          variables: {
+            file: target.files[0],
+            id:  this.$route.query.id
+          },
+        })
+        .then(({ data }) => {
+          this.loading = false;
+
+          this.toast.success("File added Successfully.");
+          this.$router.go();
+        })
+        .catch((err) => {
+          this.loading = false;
+          this.toast.error(err.message || "Something went wrong.");
+        });
     },
   },
 };

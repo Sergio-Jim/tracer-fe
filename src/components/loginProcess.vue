@@ -246,6 +246,8 @@ export default {
                 token
                 status
                 message
+                username
+                phone_number
               }
             }
           `,
@@ -256,13 +258,13 @@ export default {
           },
         })
         .then(({ data }) => {
-          console.log(data);
           return data.verifyOtp;
         })
-        .then(({ username , token , status, message }) => {
+        .then(({ phone_number , username , token , status, message }) => {
           this.isLoading = false;
           if (status) {
             localStorage.setItem("username", username);
+            localStorage.setItem("phone_number", phone_number);
             localStorage.setItem("token", token);
             this.$router.push("/dashboard");
           } else {

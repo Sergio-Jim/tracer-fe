@@ -38,11 +38,13 @@
                   justify-content: space-between;
                   align-items: center;
                 "
+                onclick="document.getElementById('files_profile_picture').click()"
+
                 @mouseover="showText = 1"
                 @mouseleave="showText = 0"
               >
                 <img
-                  src="@/assets/user-100.png"
+                  :src="picture"
                   alt="user"
                   style="height: 70px; width: 100px; margin: 30px"
                 />
@@ -65,7 +67,10 @@
                     "
                     v-if="showText === 1"
                     >Upload Profile Picture</span
+
                   >
+                  <input type="file" id="files_profile_picture" class="hidden"  @change="uploadPhoto" />
+
                 </div>
               </div>
               <div
@@ -323,7 +328,7 @@
                       >
                       
                         <div class="text-xs">
-                          <input type="file" id="files" class="hidden"  @change="uploadPhoto" />
+                          <input type="file" id="files" class="hidden"  @change="uploadDocument" />
                           UPLOAD DOCUMENTS
                         </div>
                       </button>
@@ -356,7 +361,7 @@
               >
                 <button
                   style="height: 40px"
-                  v-on:click="createClient"
+                  v-on:click="viewModal = !viewModal"
                   type="button"
                 >
                   <vue-loaders
@@ -380,7 +385,7 @@
       </div>
     </div>
   </div>
-  <!-- <otpmodal v-bind:viewModal="viewModal" @hide-modal="viewModal = false" /> -->
+  <otpmodal v-bind:viewModal="viewModal" @hide-modal="viewModal = false" />
 </template>
 
 <script>
@@ -405,12 +410,14 @@ export default {
       mismangement_comments:"",
       is_unlawful:"",
       unlawfulness_comments:"",
-      documents: []
+      picture: '../../assets/user-100.png',
+      documents: [],
+      profile_picture: []
     };
   },
   components: {
     LitepieDatepicker,
-    //otpmodal,
+    otpmodal,
   },
   setup() {
     const toast = useToast();
@@ -429,16 +436,15 @@ export default {
   },
   methods: {
    async createClient() {
-    console.log( this.dateValue[0] );
     this.isLoading = true;
-      this.$apollo
+    this.$apollo
         .mutate({
           // Query
           mutation: gql`
             mutation createOffence(
                        $fullname: String!,
                        $idnumber: String!,
-                       $profile_picture:  String!
+                       $profile_picture:  Upload!
                        $driving_licence_number: String!
                        $offenses: [ offense ]
                        $documents: [ document ]
@@ -457,7 +463,7 @@ export default {
           variables: {
               fullname: this.fullName,
               idnumber: this.idNumber,
-              profile_picture: "",
+              profile_picture: this.profile_picture[0],
               driving_licence_number: this.drivingLicenseNo,
               offenses: [ 
                 { date_of_offense: this.dateValue[0] , offense_type: "overspeeding" , comment: this.overspeeding_comments },
@@ -471,20 +477,20 @@ export default {
           this.toast.success( this.fullName + " created succesfully.");
           return data.createOffence;
         })
-        .then(({ message }) => {
-
-            this.toast.error(" Failed to create client: " + this.fullName );
-
-          
-        })
         .catch((err) => {
           this.isLoading = false;
           this.toast.error( "Oops! network error refresh page and try again.");
         });
 
-   }, 
-   async uploadPhoto({ target }) {
+   },
+
+   async uploadDocument({ target }) {
        this.documents.push( { file : target.files[0]} )
+   },
+   async uploadPhoto({ target }) {
+       
+       this.picture = URL.createObjectURL( target.files[0] )
+       this.profile_picture.push( target.files[0] )
    }
   }
 };

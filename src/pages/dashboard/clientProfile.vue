@@ -63,7 +63,7 @@
                 @mouseleave="showText = 0"
               >
                 <img
-                  src="@/assets/user-100.png"
+                  :src="profile_picture"
                   alt="user"
                   style="height: 70px; width: 100px; margin: 30px"
                 />
@@ -309,17 +309,12 @@
                   <span
                     class="cursor-pointer"
                     v-on:click="viewModal = !viewModal"
-                    >View Documents</span
-                  >
+                    >View Documents</span>
                 </div>
               </div>
             </div>
             <!-- upload button -->
 
-            <div class="text-xs">
-                          <input type="file" id="files" class="hidden"  @change="uploadPhoto" />
-                          UPLOAD DOCUMENTS
-                        </div>
             <div
               :style="{
                 margin: '10px 0',
@@ -363,7 +358,7 @@
             >
           </div>
           <div>
-            <span style="font-size: 10px">Last Edit By: username232</span>
+            <span style="font-size: 10px">Last Edit By: {{username}}</span>
           </div>
         </div>
       </div>
@@ -387,6 +382,7 @@ export default {
       viewModal: false,
       fullName: "",
       idNumber:"",
+      username: localStorage.getItem( 'username' ),
       drivingLicenseNo:"",
       is_overspeeding:"",
       overspeeding_comments:"",
@@ -396,6 +392,7 @@ export default {
       unlawfulness_comments:"",
       idoffense: [],
       date:"",
+      profile_picture: "",
       document: []
     };
   },
@@ -442,6 +439,7 @@ export default {
                 }
                 documents {
                   document_name
+                  created
                 }
               }
             }
@@ -456,6 +454,7 @@ export default {
           var client = data.getOffenseById
           this.fullName = client.fullname
           this.idNumber = client.idnumber
+          this.profile_picture = client.profile_picture
           this.drivingLicenseNo = client.driving_licence_number
           this.date = client.offense[0].date_of_offense != null ? client.offense[0].date_of_offense : this.date
           this.document = client.documents 
@@ -545,9 +544,6 @@ export default {
           this.toast.error( "Oops! network error refresh page and try again.");
         });
 
-   }, 
-   async uploadPhoto({ target }) {
-       this.documents.push( { file : target.files[0]} )
    }
   }
 

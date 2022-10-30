@@ -63,7 +63,7 @@
                   w-full
                 "
                 style="height: 40px"
-                v-on:click="verify"
+                v-on:click="verifyOtp"
                 type="button"
               >
                 <vue-loaders
@@ -99,6 +99,8 @@
 </template>
 
 <script>
+import gql from "graphql-tag";
+
 export default {
   name: "otpmodal",
   props: { viewModal: { type: Boolean } },
@@ -107,10 +109,74 @@ export default {
       otp: "",
     };
   },
+  created() {
+    this.$apollo
+        .query({
+          // Query
+          query: gql`
+          query requestOtp {
+              requestOtp
+            }
+          `,
+        })
+        .then(({ data }) => {
+          this.isLoading = false;
+          // this.toast.success( "OTP sent to " + localStorage.getItem( 'phone_number' ) , {
+          //   timeout: 2000,
+          // });
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.toast.error(err.message || "Something went wrong", {
+            timeout: 2000,
+          });
+        });
+  },
   methods: {
     reloadPage() {
       window.location.reload();
     },
+    async verifyOtp() {
+      this.isLoading = true;
+      this.$apollo
+        .mutate({
+          // Query
+          mutation: gql`
+            mutation verifyOtp($phone_number: String!, $code: String!) {
+              verifyOtp(phone_number: $phone_number, code: $code) {
+                token
+                status
+                message
+                username
+                phone_number
+              }
+            }
+          `,
+          // Parameters
+          variables: {
+            phone_number:  localStorage.getItem("phone_number"),
+            code: this.otp,
+          },
+        })
+        .then(({ data }) => {
+
+          return data.verifyOtp;
+        })
+        .then(({  status, message }) => {
+          this.isLoading = false;
+          if (status) {
+            this.$parent.createClient();
+            //this.$root.$emit("createClient") 
+            //this.$router.push("/dashboard");
+          } else {
+            this.toast.error(message);
+          }
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.toast.error(err.message || "Something went wrong.");
+        });
+    }, 
   },
 };
 </script>
