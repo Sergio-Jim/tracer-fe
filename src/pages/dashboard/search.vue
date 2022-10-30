@@ -155,6 +155,7 @@ export default {
               searchOffences (
                 searchQuery: $searchQuery
               ) {
+                idclients
                 fullname
                 idnumber
               }

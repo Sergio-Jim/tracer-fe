@@ -395,7 +395,7 @@ export default {
       is_unlawful:"",
       unlawfulness_comments:"",
       idoffense: [],
-      date:"2022-10-12",
+      date:"",
       document: []
     };
   },
@@ -457,39 +457,40 @@ export default {
           this.fullName = client.fullname
           this.idNumber = client.idnumber
           this.drivingLicenseNo = client.driving_licence_number
-          this.date = client.offense[0] === null ? client.offense[0].date_of_offense : this.date
+          this.date = client.offense[0].date_of_offense != null ? client.offense[0].date_of_offense : this.date
           this.document = client.documents 
 
           client.offense.map( ( offense ) => {
                this.idoffense.push( offense.idoffense)
-              if ( offense.offense_type === "overspeeding" ) {
-                 this.is_overspeeding = true
-                 this.overspeeding_comments = offense.comment
-              }
+               console.log( offense.comment )
+              if ( offense.comment !== "" ) {
 
-              if ( offense.offense_type === "mismanagement" ) {
-                 this.is_mismangement = true
-                 this.mismangement_comments = offense.comment
-              }
+                  if ( offense.offense_type === "overspeeding" ) {
+                    this.is_overspeeding = true
+                    this.overspeeding_comments = offense.comment
+                  }
 
-              if ( offense.offense_type === "unlawfulness" ) {
-                 this.is_unlawful = true
-                 this.unlawfulness_comments = offense.comment
-              }
+                  if ( offense.offense_type === "mismanagement" ) {
+                    this.is_mismangement = true
+                    this.mismangement_comments = offense.comment
+                  }
+
+                  if ( offense.offense_type === "unlawfulness" ) {
+                    this.is_unlawful = true
+                    this.unlawfulness_comments = offense.comment
+                  }
+                }
           })
-
-
         })
         .catch((err) => {
           this.isLoading = false;
-          this.toast.error(err.message || "Something went wrong", {
+          this.toast.error( "Oops! network error ", {
             timeout: 2000,
           });
         });
   },
   methods: {
    async updateClient() {
-    console.log( this.dateValue[0] );
     this.isLoading = true;
       this.$apollo
         .mutate({
@@ -531,14 +532,13 @@ export default {
           },
         })
         .then(({ data }) => {
-          this.toast.success( this.fullName + " updated succesfully");
           return data.updateOffence;
         })
         .then(({ message }) => {
-
-            this.toast.error(" Failed to update information for " + this.fullName );
-
-          
+          this.toast.success( `${this.fullName} updated succesfully`, {
+            timeout: 2000,
+          });
+          location.reload();
         })
         .catch((err) => {
           this.isLoading = false;
