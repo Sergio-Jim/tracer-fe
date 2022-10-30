@@ -100,7 +100,7 @@
           "
         >
           <h4>{{ username }}</h4>
-          <h4 style="cursor: pointer" v-on:click="this.$router.push('/login')">
+          <h4 style="cursor: pointer" v-on:click="logout">
             Log out
           </h4>
         </div>
@@ -119,6 +119,11 @@ export default {
   data() {
     return {
       username : localStorage.getItem('username' ) 
+    }
+  },
+  methods : {
+    logout( ) {
+      localStorage.clear();
     }
   }
 };
