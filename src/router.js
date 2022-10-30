@@ -49,7 +49,7 @@ const routes = [
           method: "GET",
           headers,
           url:
-            process.env.NODE_ENV == "production" ? "" : "http://localhost:4000",
+            process.env.NODE_ENV == "production" ? "https://tracer-api-xjm95.ondigitalocean.app/" : "http://localhost:4000",
         })
           .then((res) => {
             if (res.data.success) next();
