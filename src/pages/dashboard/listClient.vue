@@ -475,6 +475,7 @@ export default {
         })
         .then(({ data }) => {
           this.toast.success( this.fullName + " created succesfully.");
+          this.$router.push("/dashboard/search");
           return data.createOffence;
         })
         .catch((err) => {

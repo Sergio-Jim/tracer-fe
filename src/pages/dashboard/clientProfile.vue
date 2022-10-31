@@ -382,7 +382,7 @@ export default {
       viewModal: false,
       fullName: "",
       idNumber:"",
-      username: localStorage.getItem( 'username' ),
+      username: "",
       drivingLicenseNo:"",
       is_overspeeding:"",
       overspeeding_comments:"",
@@ -417,6 +417,40 @@ export default {
     };
   },
   created() {
+    this.$apollo
+        .query({
+          // Query
+          query: gql`
+            query getOffenseUpdateUser (
+              $id: String
+            ){
+              getOffenseUpdateUser (
+                id: $id
+              ) {
+                client_id
+                user {
+                  username
+                }
+              }
+            }
+          `,
+          // Parameters
+          variables: {
+            id:  this.$route.query.id,
+          },
+        })
+        .then(({ data }) => {
+          this.isLoading = false
+          var user = data.getOffenseUpdateUser
+          this.username = user.user.username != null ? user.user.username : "no user"
+          
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.toast.error( err + "Oops! network error ", {
+            timeout: 2000,
+          });
+        });
     this.$apollo
         .query({
           // Query
@@ -533,7 +567,7 @@ export default {
         .then(({ data }) => {
           return data.updateOffence;
         })
-        .then(({ message }) => {
+        .then(( res ) => {
           this.toast.success( `${this.fullName} updated succesfully`, {
             timeout: 2000,
           });
@@ -541,7 +575,7 @@ export default {
         })
         .catch((err) => {
           this.isLoading = false;
-          this.toast.error( "Oops! network error refresh page and try again.");
+          this.toast.error( err + "Oops! network error refresh page and try again.");
         });
 
    }
