@@ -3,46 +3,62 @@
     <div style="margin: 50px">
       <div id="enter_credentials">
         <form>
-          <div style="margin-top: 50px">
-            <input
-              type="text"
-              v-model="username"
-              placeholder="Username"
-              class="
-                shadow
-                appearance-none
-                border
-                rounded
-                w-full
-                py-2
-                px-3
-                text-gray-700
-                mb-3
-                leading-tight
-                focus:outline-none focus:shadow-outline
-              "
-            />
+          <div style="margin: 15px 0">
+            <div :class="{ error: v$.username.$errors.length }">
+              <input
+                type="text"
+                v-model="username"
+                placeholder="Username"
+                class="
+                  shadow
+                  appearance-none
+                  border
+                  rounded
+                  w-full
+                  py-2
+                  px-3
+                  text-gray-700
+                  leading-tight
+                  focus:outline-none focus:shadow-outline
+                "
+              />
+              <div
+                class="input-errors text-sm px-1"
+                v-for="error of v$.username.$errors"
+                :key="error.$uid"
+              >
+                <div class="error-msg">Username Required</div>
+              </div>
+            </div>
           </div>
 
-          <div style="margin-top: 5px">
-            <input
-              type="password"
-              v-model="password"
-              placeholder="Password"
-              class="
-                shadow
-                appearance-none
-                border
-                rounded
-                w-full
-                py-2
-                px-3
-                text-gray-700
-                mb-3
-                leading-tight
-                focus:outline-none focus:shadow-outline
-              "
-            />
+          <div style="margin: 15px 0">
+            <div :class="{ error: v$.password.$errors.length }">
+              <input
+                type="password"
+                v-model="password"
+                placeholder="Password"
+                class="
+                  shadow
+                  appearance-none
+                  border
+                  rounded
+                  w-full
+                  py-2
+                  px-3
+                  text-gray-700
+                  leading-tight
+                  focus:outline-none focus:shadow-outline
+                "
+              />
+              <div
+                class="input-errors text-sm px-1"
+                v-for="error of v$.password.$errors"
+                :key="error.$uid"
+              >
+                <div class="error-msg">Password Required</div>
+              </div>
+            </div>
           </div>
 
           <div
@@ -71,9 +87,9 @@
                 <button style="height: 40px" v-on:click="login" type="button">
                   <vue-loaders
                     v-if="this.isLoading"
-                    name="line-scale"
-                    color="black"
-                    scale="0.5"
+                    name="ball-clip-rotate-pulse"
+                    color="red"
+                    scale="1"
                   ></vue-loaders>
                   <div class="py-2 text-red-800" v-else>Authenticate</div>
                 </button>
@@ -97,14 +113,10 @@
       </div>
 
       <div id="enter_otp" style="display: none">
-        <form>
+        <form form v-on:submit.prevent="verifyOtp">
           <span>OTP has been sent to {{ this.phone_number }}</span>
-
-          <div style="margin-top: 50px">
+          <div style="margin-top: 10px">
             <input
-              type="text"
-              v-model="otp"
-              placeholder="OTP"
               class="
                 shadow
                 appearance-none
@@ -118,10 +130,17 @@
                 leading-tight
                 focus:outline-none focus:shadow-outline
               "
+              v-model="otp"
+              placeholder="OTP"
+              type="text"
+              maxlength="6"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+              onKeyPress="if(this.value.length==6) return false;"
+              required
             />
           </div>
 
-          <div style="margin: 50px 0" class="flex items-center justify-between">
+          <div style="margin: 10px 0" class="flex items-center justify-between">
             <button
               class="
                 bg-tracergrey
@@ -136,8 +155,7 @@
                 w-full
               "
               style="height: 40px"
-              v-on:click="verifyOtp"
-              type="button"
+              type="submit"
             >
               <vue-loaders
                 v-if="this.isLoading"
@@ -168,6 +186,8 @@
 <script>
 import gql from "graphql-tag";
 import { useToast } from "vue-toastification";
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 export default {
   name: "LoginProcess",
@@ -176,28 +196,27 @@ export default {
     const toast = useToast();
 
     // Make it available inside methods
-    return { toast };
+    return { toast, v$: useVuelidate() };
   },
 
   data() {
     return {
+      isLoading: false,
       active: false,
       username: "",
       password: "",
       phone_number: "",
-      otp: 0,
+      otp: "",
     };
   },
   methods: {
-    showDiv() {
-      document.getElementById("enter_otp").style.display = "block";
-      document.getElementById("enter_credentials").style.display = "none";
-    },
     reloadPage() {
       window.location.reload();
     },
     async login() {
-      //alert('het');
+      const isForm = await this.v$.$validate();
+      console.log(isForm);
+      if (!isForm) return;
       this.isLoading = true;
       this.$apollo
         .mutate({
@@ -236,6 +255,8 @@ export default {
         });
     },
     async verifyOtp() {
+      const isFormCorrect = await this.v$.$validate();
+      if (!isFormCorrect) return;
       this.isLoading = true;
       this.$apollo
         .mutate({
@@ -260,7 +281,7 @@ export default {
         .then(({ data }) => {
           return data.verifyOtp;
         })
-        .then(({ phone_number , username , token , status, message }) => {
+        .then(({ phone_number, username, token, status, message }) => {
           this.isLoading = false;
           if (status) {
             localStorage.setItem("username", username);
@@ -277,9 +298,15 @@ export default {
         });
     },
   },
+  validations() {
+    return {
+      username: {
+        required,
+      },
+      password: {
+        required,
+      },
+    };
+  },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
