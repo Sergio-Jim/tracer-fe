@@ -100,10 +100,18 @@
 
 <script>
 import gql from "graphql-tag";
+import { useToast } from "vue-toastification";
 
 export default {
   name: "otpmodal",
   props: { viewModal: { type: Boolean } },
+  setup() {
+    // Get toast interface
+    const toast = useToast();
+
+    // Make it available inside methods
+    return { toast };
+  },
   data() {
     return {
       otp: "",
@@ -121,9 +129,9 @@ export default {
         })
         .then(({ data }) => {
           this.isLoading = false;
-          // this.toast.success( "OTP sent to " + localStorage.getItem( 'phone_number' ) , {
-          //   timeout: 2000,
-          // });
+          this.toast.success( "OTP sent to " + localStorage.getItem( 'phone_number' ) , {
+            timeout: 2000,
+          });
         })
         .catch((err) => {
           this.isLoading = false;
@@ -167,12 +175,12 @@ export default {
           if (status) {
             this.$parent.createClient();
           } else {
-            this.toast.error(message);
+           // this.toast.error(message);
           }
         })
         .catch((err) => {
           this.isLoading = false;
-          this.toast.error(err.message || "Something went wrong.");
+         // this.toast.error(err.message || "Something went wrong.");
         });
     }, 
   },
