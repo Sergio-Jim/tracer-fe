@@ -137,11 +137,11 @@
                   </div>
                 </div>
 
-                <div
-                  style="display: flex; flex-direction: row"
-                  class="py-1 px-3 mb-1 ml-3"
-                >
-                  <div :class="{ error: v$.idNumber.$errors.length }">
+                <div style="display: flex; flex-direction: row">
+                  <div
+                    :class="{ error: v$.idNumber.$errors.length }"
+                    class="py-1 px-3 mb-1 ml-3"
+                  >
                     <input
                       type="text"
                       v-model="drivingLicenseNo"
