@@ -34,19 +34,17 @@
                   border: 2px solid;
                   width: 150px;
                   height: 150px;
-                  background-color: #c9c9c9;
                   justify-content: space-between;
                   align-items: center;
                 "
                 onclick="document.getElementById('files_profile_picture').click()"
-
                 @mouseover="showText = 1"
                 @mouseleave="showText = 0"
               >
                 <img
                   :src="picture"
                   alt="user"
-                  style="height: 70px; width: 100px; margin: 30px"
+                  style="height: 150px; width: 150px"
                 />
                 <div
                   style="
@@ -67,10 +65,13 @@
                     "
                     v-if="showText === 1"
                     >Upload Profile Picture</span
-
                   >
-                  <input type="file" id="files_profile_picture" class="hidden"  @change="uploadPhoto" />
-
+                  <input
+                    type="file"
+                    id="files_profile_picture"
+                    class="hidden"
+                    @change="uploadPhoto"
+                  />
                 </div>
               </div>
               <div
@@ -81,63 +82,89 @@
                 "
               >
                 <div style="display: flex; flex-direction: row">
-                  <input
-                    type="text"
-                    v-model="fullName"
-                    placeholder="FULL NAME"
-                    class="
-                      shadow
-                      appearance-none
-                      w-56
-                      py-2
-                      px-3
-                      text-gray-700
-                      mb-3
-                      ml-3
-                      leading-tight
-                      text-xs
-                    "
-                  />
+                  <div
+                    :class="{ error: v$.fullName.$errors.length }"
+                    class="py-1 px-3 mb-1 ml-3"
+                  >
+                    <input
+                      type="text"
+                      v-model="fullName"
+                      placeholder="FULL NAME"
+                      class="
+                        shadow
+                        appearance-none
+                        w-56
+                        text-gray-700
+                        leading-tight
+                        text-xs
+                      "
+                    />
+                    <div
+                      class="input-errors text-sm px-1"
+                      v-for="error of v$.fullName.$errors"
+                      :key="error.$uid"
+                    >
+                      <div class="error-msg">Full names required</div>
+                    </div>
+                  </div>
                 </div>
 
                 <div style="display: flex; flex-direction: row">
-                  <input
-                    type="text"
-                    v-model="idNumber"
-                    placeholder="ID NUMBER"
-                    class="
-                      shadow
-                      appearance-none
-                      w-56
-                      py-2
-                      px-3
-                      text-gray-700
-                      mb-3
-                      ml-3
-                      leading-tight
-                      text-xs
-                    "
-                  />
+                  <div
+                    :class="{ error: v$.idNumber.$errors.length }"
+                    class="py-1 px-3 mb-1 ml-3"
+                  >
+                    <input
+                      type="text"
+                      v-model="idNumber"
+                      placeholder="ID NUMBER"
+                      class="
+                        shadow
+                        appearance-none
+                        w-56
+                        text-gray-700
+                        leading-tight
+                        text-xs
+                      "
+                    />
+                    <div
+                      class="input-errors text-sm px-1"
+                      v-for="error of v$.idNumber.$errors"
+                      :key="error.$uid"
+                    >
+                      <div class="error-msg">ID Number required</div>
+                    </div>
+                  </div>
                 </div>
 
-                <div style="display: flex; flex-direction: row">
-                  <input
-                    type="text"
-                    v-model="drivingLicenseNo"
-                    placeholder="DRIVING LICENSE NUMBER"
-                    class="
-                      shadow
-                      appearance-none
-                      w-56
-                      py-2
-                      px-3
-                      text-gray-700
-                      mb-3
-                      ml-3
-                      leading-tight
-                      text-xs
-                    "
-                  />
+                <div
+                  style="display: flex; flex-direction: row"
+                  class="py-1 px-3 mb-1 ml-3"
+                >
+                  <div :class="{ error: v$.idNumber.$errors.length }">
+                    <input
+                      type="text"
+                      v-model="drivingLicenseNo"
+                      placeholder="DRIVING LICENSE NUMBER"
+                      class="
+                        shadow
+                        appearance-none
+                        w-56
+                        text-gray-700
+                        leading-tight
+                        text-xs
+                      "
+                    />
+                    <div
+                      class="input-errors text-sm px-1"
+                      v-for="error of v$.drivingLicenseNo.$errors"
+                      :key="error.$uid"
+                    >
+                      <div class="error-msg">
+                        Drivers License Number required
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -163,18 +190,20 @@
                     class="block text-gray-500 font-bold"
                   >
                     <input
-                      class="mr-2 leading-tight"
+                      class="mr-2"
                       type="checkbox"
                       id="is_overspeeding"
                       name="is_overspeeding"
                       v-model="is_overspeeding"
                       value="overspeeding"
+                      v-on:click="clearOverspeedingComment"
                     />
                     <span class="text-sm">OVERSPEEDING</span>
                   </label>
                 </div>
 
                 <input
+                  :disabled="!is_overspeeding"
                   type="text"
                   v-model="overspeeding_comments"
                   placeholder="Comments"
@@ -201,18 +230,20 @@
                     class="block text-gray-500 font-bold"
                   >
                     <input
-                      class="mr-2 leading-tight"
+                      class="mr-2"
                       type="checkbox"
                       id="is_mismangement"
                       name="is_mismangement"
                       v-model="is_mismangement"
                       value="mismangement"
+                      v-on:click="clearMismanageComment"
                     />
                     <span class="text-sm">MISMANAGEMENT OF VEHICLE</span>
                   </label>
                 </div>
 
                 <input
+                  :disabled="!is_mismangement"
                   type="text"
                   v-model="mismangement_comments"
                   placeholder="Comments"
@@ -239,18 +270,20 @@
                     class="block text-gray-500 font-bold"
                   >
                     <input
-                      class="mr-2 leading-tight"
+                      class="mr-2"
                       type="checkbox"
                       id="is_unlawful"
                       name="is_unlawful"
                       v-model="is_unlawful"
                       value="unlawful"
+                      v-on:click="clearUnlawfulComment"
                     />
                     <span class="text-sm">UNLAWFUL USE OF VEHICLE</span>
                   </label>
                 </div>
 
                 <input
+                  :disabled="!is_unlawful"
                   type="text"
                   v-model="unlawfulness_comments"
                   placeholder="Comments"
@@ -272,13 +305,23 @@
               <div>
                 <span class="text-xs">APPROXIMATE DATE OF OFFENSE</span>
                 <div style="display: flex; flex-direction: row">
-                  <div class="w-3/5">
-                    <litepie-datepicker
-                      :formatter="formatter"
-                      :auto-apply="false"
-                      as-single
-                      v-model="dateValue"
-                    ></litepie-datepicker>
+                  <div :class="{ error: v$.dateValue.$errors.length }">
+                    <div class="w-full">
+                      <litepie-datepicker
+                        :formatter="formatter"
+                        :auto-apply="false"
+                        as-single
+                        v-model="dateValue"
+                        :disable-date="disableDate"
+                      ></litepie-datepicker>
+                      <div
+                        class="input-errors text-sm px-2"
+                        v-for="error of v$.dateValue.$errors"
+                        :key="error.$uid"
+                      >
+                        <div class="error-msg">Date Required</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -326,9 +369,13 @@
                         type="button"
                         onclick="document.getElementById('files').click()"
                       >
-                      
                         <div class="text-xs">
-                          <input type="file" id="files" class="hidden"  @change="uploadDocument" />
+                          <input
+                            type="file"
+                            id="files"
+                            class="hidden"
+                            @change="uploadDocument"
+                          />
                           UPLOAD DOCUMENTS
                         </div>
                       </button>
@@ -340,7 +387,7 @@
 
             <!-- upload button -->
             <div
-              style="{
+              :style="{
                 margin: '10px 0',
                 height: '50px',
                 width: '100%',
@@ -361,14 +408,14 @@
               >
                 <button
                   style="height: 40px"
-                  v-on:click="viewModal = !viewModal"
+                  v-on:click="createClient"
                   type="button"
                 >
                   <vue-loaders
                     v-if="this.isLoading"
-                    name="line-scale"
-                    color="black"
-                    scale="0.5"
+                    name="ball-clip-rotate-pulse"
+                    color="red"
+                    scale="1"
                   ></vue-loaders>
                   <div class="py-2 text-red-800" v-else>LIST CLIENT</div>
                 </button>
@@ -385,7 +432,7 @@
       </div>
     </div>
   </div>
-  <otpmodal v-bind:viewModal="viewModal" @hide-modal="viewModal = false" />
+  <!-- <otpmodal v-bind:viewModal="viewModal" @hide-modal="viewModal = false" /> -->
 </template>
 
 <script>
@@ -393,31 +440,34 @@ import { ref } from "vue";
 import gql from "graphql-tag";
 import { useToast } from "vue-toastification";
 import LitepieDatepicker from "litepie-datepicker";
-import otpmodal from "@/components/otpmodal.vue";
+// import otpmodal from "@/components/otpmodal.vue";
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 export default {
   name: "ListClient",
   data() {
     return {
+      isLoading: false,
       showText: 0,
       viewModal: false,
-      fullName:"",
-      idNumber:"",
-      drivingLicenseNo:"",
-      is_overspeeding:"",
-      overspeeding_comments:"",
-      is_mismangement:"",
-      mismangement_comments:"",
-      is_unlawful:"",
-      unlawfulness_comments:"",
-      picture: '../../assets/user-100.png',
+      fullName: "",
+      idNumber: "",
+      drivingLicenseNo: "",
+      is_overspeeding: "",
+      overspeeding_comments: "",
+      is_mismangement: "",
+      mismangement_comments: "",
+      is_unlawful: "",
+      unlawfulness_comments: "",
+      picture: "@/assets/user-100.png",
       documents: [],
-      profile_picture: []
+      profile_picture: [],
     };
   },
   components: {
     LitepieDatepicker,
-    otpmodal,
+    // otpmodal,
   },
   setup() {
     const toast = useToast();
@@ -427,73 +477,115 @@ export default {
       date: "DD MMMM YYYY",
       month: "MMMM",
     });
+    const disableDate = (date) => {
+      return date > new Date();
+    };
 
     return {
       dateValue,
       formatter,
-      toast
+      toast,
+      disableDate,
+      v$: useVuelidate(),
     };
   },
   methods: {
-   async createClient() {
-    this.isLoading = true;
-    this.$apollo
+    async createClient() {
+      const isFormCorrect = await this.v$.$validate();
+      if (!isFormCorrect) return;
+      this.isLoading = true;
+      this.$apollo
         .mutate({
           // Query
           mutation: gql`
             mutation createOffence(
-                       $fullname: String!,
-                       $idnumber: String!,
-                       $profile_picture:  Upload!
-                       $driving_licence_number: String!
-                       $offenses: [ offense ]
-                       $documents: [ document ]
-                    ) {
-                     createOffence(
-                      fullname: $fullname,
-                      idnumber: $idnumber,
-                      profile_picture: $profile_picture,
-                      driving_licence_number: $driving_licence_number,
-                      offenses: $offenses
-                      documents: $documents
-                    ) 
-                  }
+              $fullname: String!
+              $idnumber: String!
+              $profile_picture: Upload!
+              $driving_licence_number: String!
+              $offenses: [offense]
+              $documents: [document]
+            ) {
+              createOffence(
+                fullname: $fullname
+                idnumber: $idnumber
+                profile_picture: $profile_picture
+                driving_licence_number: $driving_licence_number
+                offenses: $offenses
+                documents: $documents
+              )
+            }
           `,
           // Parameters
           variables: {
-              fullname: this.fullName,
-              idnumber: this.idNumber,
-              profile_picture: this.profile_picture[0],
-              driving_licence_number: this.drivingLicenseNo,
-              offenses: [ 
-                { date_of_offense: this.dateValue[0] , offense_type: "overspeeding" , comment: this.overspeeding_comments },
-                { date_of_offense: this.dateValue[0] , offense_type: "mismanagement" , comment: this.mismangement_comments },
-                { date_of_offense: this.dateValue[0] , offense_type: "unlawfulness" , comment: this.unlawfulness_comments }
-              ],
-              documents: this.documents,
+            fullname: this.fullName,
+            idnumber: this.idNumber,
+            profile_picture: this.profile_picture[0],
+            driving_licence_number: this.drivingLicenseNo,
+            offenses: [
+              {
+                date_of_offense: this.dateValue[0],
+                offense_type: "overspeeding",
+                comment: this.overspeeding_comments,
+              },
+              {
+                date_of_offense: this.dateValue[0],
+                offense_type: "mismanagement",
+                comment: this.mismangement_comments,
+              },
+              {
+                date_of_offense: this.dateValue[0],
+                offense_type: "unlawfulness",
+                comment: this.unlawfulness_comments,
+              },
+            ],
+            documents: this.documents,
           },
         })
         .then(({ data }) => {
-          this.toast.success( this.fullName + " created succesfully.");
+          this.toast.success(this.fullName + " created succesfully.");
           this.$router.push("/dashboard/search");
           return data.createOffence;
         })
         .catch((err) => {
           this.isLoading = false;
-          this.toast.error( "Oops! network error refresh page and try again.");
+          this.toast.error("Oops! network error refresh page and try again.");
         });
+    },
 
-   },
-
-   async uploadDocument({ target }) {
-       this.documents.push( { file : target.files[0]} )
-   },
-   async uploadPhoto({ target }) {
-       
-       this.picture = URL.createObjectURL( target.files[0] )
-       this.profile_picture.push( target.files[0] )
-   }
-  }
+    async uploadDocument({ target }) {
+      this.documents.push({ file: target.files[0] });
+    },
+    async uploadPhoto({ target }) {
+      this.picture = URL.createObjectURL(target.files[0]);
+      this.profile_picture.push(target.files[0]);
+    },
+    clearOverspeedingComment() {
+      this.overspeeding_comments = "";
+    },
+    clearMismanageComment() {
+      this.mismangement_comments = "";
+    },
+    clearUnlawfulComment() {
+      this.unlawfulness_comments = "";
+    },
+  },
+  validations() {
+    return {
+      fullName: {
+        required,
+      },
+      idNumber: {
+        required,
+      },
+      drivingLicenseNo: {
+        required,
+      },
+      dateValue: {
+        required,
+      },
+    };
+  },
 };
 </script>
 
