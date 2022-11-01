@@ -9,7 +9,7 @@
       items-center
       z-50
     "
-    v-if="viewModal"
+    v-if="showModal"
   >
     <div class="relative wx-auto w-auto max-w-5xl">
       <div
@@ -93,7 +93,7 @@
     </div>
   </div>
   <div
-    v-if="viewModal"
+    v-if="showModal"
     class="fixed h-screen w-screen inset-0 z-40 opacity-70 bg-black"
   ></div>
 </template>
@@ -104,7 +104,7 @@ import { useToast } from "vue-toastification";
 
 export default {
   name: "otpmodal",
-  props: { viewModal: { type: Boolean } },
+  props: { showModal: { type: Boolean } },
   setup() {
     // Get toast interface
     const toast = useToast();
@@ -114,31 +114,35 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       otp: "",
     };
   },
   created() {
     this.$apollo
-        .query({
-          // Query
-          query: gql`
+      .query({
+        // Query
+        query: gql`
           query requestOtp {
-              requestOtp
-            }
-          `,
-        })
-        .then(({ data }) => {
-          this.isLoading = false;
-          this.toast.success( "OTP sent to " + localStorage.getItem( 'phone_number' ) , {
+            requestOtp
+          }
+        `,
+      })
+      .then(({ data }) => {
+        this.isLoading = false;
+        this.toast.success(
+          "OTP sent to " + localStorage.getItem("phone_number"),
+          {
             timeout: 2000,
-          });
-        })
-        .catch((err) => {
-          this.isLoading = false;
-          this.toast.error(err.message || "Something went wrong", {
-            timeout: 2000,
-          });
+          }
+        );
+      })
+      .catch((err) => {
+        this.isLoading = false;
+        this.toast.error(err.message || "Something went wrong", {
+          timeout: 2000,
         });
+      });
   },
   methods: {
     reloadPage() {
@@ -162,27 +166,26 @@ export default {
           `,
           // Parameters
           variables: {
-            phone_number:  localStorage.getItem("phone_number"),
+            phone_number: localStorage.getItem("phone_number"),
             code: this.otp,
           },
         })
         .then(({ data }) => {
-
           return data.verifyOtp;
         })
-        .then(({  status, message }) => {
+        .then(({ status, message }) => {
           this.isLoading = false;
           if (status) {
             this.$parent.createClient();
           } else {
-           // this.toast.error(message);
+            // this.toast.error(message);
           }
         })
         .catch((err) => {
           this.isLoading = false;
-         // this.toast.error(err.message || "Something went wrong.");
+          // this.toast.error(err.message || "Something went wrong.");
         });
-    }, 
+    },
   },
 };
 </script>

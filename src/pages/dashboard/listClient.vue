@@ -408,7 +408,7 @@
               >
                 <button
                   style="height: 40px"
-                  v-on:click="createClient"
+                  v-on:click="showModal = !showModal"
                   type="button"
                 >
                   <vue-loaders
@@ -432,7 +432,7 @@
       </div>
     </div>
   </div>
-  <!-- <otpmodal v-bind:viewModal="viewModal" @hide-modal="viewModal = false" /> -->
+  <otpmodal v-bind:showModal="showModal" @hide-modal="showModal = false" />
 </template>
 
 <script>
@@ -440,7 +440,7 @@ import { ref } from "vue";
 import gql from "graphql-tag";
 import { useToast } from "vue-toastification";
 import LitepieDatepicker from "litepie-datepicker";
-// import otpmodal from "@/components/otpmodal.vue";
+import otpmodal from "@/components/otpmodal.vue";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 
@@ -450,7 +450,7 @@ export default {
     return {
       isLoading: false,
       showText: 0,
-      viewModal: false,
+      showModal: false,
       fullName: "",
       idNumber: "",
       drivingLicenseNo: "",
@@ -467,7 +467,7 @@ export default {
   },
   components: {
     LitepieDatepicker,
-    // otpmodal,
+    otpmodal,
   },
   setup() {
     const toast = useToast();

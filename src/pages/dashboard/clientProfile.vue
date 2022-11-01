@@ -411,6 +411,7 @@
     v-bind:viewModal="viewModal"
     @hide-modal="viewModal = false"
   />
+  <otpmodal v-bind:showModal="showModal" @hide-modal="showModal = false" />
 </template>
 
 <script>
@@ -419,7 +420,7 @@ import gql from "graphql-tag";
 import { useToast } from "vue-toastification";
 import ViewDocuments from "@/components/viewDocuments.vue";
 // import LitepieDatepicker from "litepie-datepicker";
-// import otpmodal from "@/components/otpmodal.vue";
+import otpmodal from "@/components/otpmodal.vue";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 
@@ -431,6 +432,7 @@ export default {
       isLoading: false,
       showText: 0,
       viewModal: false,
+      showModal: false,
       fullName: "",
       idNumber: "",
       username: "",
@@ -450,6 +452,7 @@ export default {
   components: {
     // LitepieDatepicker,
     ViewDocuments,
+    otpmodal,
   },
   setup() {
     // Get toast interface
@@ -497,11 +500,11 @@ export default {
           user.user.username != null ? user.user.username : "no user";
       })
       .catch((err) => {
-      this.isLoading = false;
-      this.toast.error(err + "Oops! network error ", {
-        timeout: 2000,
+        this.isLoading = false;
+        this.toast.error(err + "Oops! network error ", {
+          timeout: 2000,
+        });
       });
-    });
     this.$apollo
       .query({
         // Query
