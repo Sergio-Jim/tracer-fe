@@ -124,7 +124,7 @@
                   <input
                     id="partitioned"
                     placeholder="PIN"
-                    v-model="pin"
+                    v-model="otp"
                     type="text"
                     maxlength="6"
                     oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"

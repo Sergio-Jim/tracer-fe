@@ -63,7 +63,8 @@
       </div>
     </div>
     <div style="display: flex; flex-direction: column; justify-content: center">
-      <div style="
+      <div
+        style="
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
@@ -71,34 +72,46 @@
           padding: 0 5%;
         "
       >
-      <img v-if="isLoading" src="@/assets/loader.gif" alt="Loading" />
-      <div v-if="clientList === null" >
-         <p>  No results found for {{ search }} query</p>
-      </div>
+        <img v-if="isLoading" src="@/assets/loader.gif" alt="Loading" />
+        <div v-if="clientList === null">
+          <p>No results found for {{ search }} query</p>
+        </div>
 
-       <div  v-for="client in clientList" :key="client.id">
-        <div class="client-background-btn">
-          <div class="client-initial-icon">{{ client.fullname.split(" ").map((n)=>n[0]).join("") }}</div>
-          <div class="client-info">
-            <div style="border: 2px solid; width: 200px; margin: 5px 0">
-              <p style="font-size: 15px; margin: 5px">{{client.fullname}}</p>
+        <div v-for="client in clientList" :key="client.id">
+          <div class="client-background-btn">
+            <div class="client-initial-icon">
+              {{
+                client.fullname
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")
+              }}
             </div>
-            <div style="border: 2px solid; width: 200px; margin: 5px 0">
-              <p style="font-size: 15px; margin: 5px">{{client.idnumber}}</p>
+            <div class="client-info">
+              <div style="border: 2px solid; width: 200px; margin: 5px 0">
+                <p style="font-size: 15px; margin: 5px">
+                  {{ client.fullname }}
+                </p>
+              </div>
+              <div style="border: 2px solid; width: 200px; margin: 5px 0">
+                <p style="font-size: 15px; margin: 5px">
+                  {{ client.idnumber }}
+                </p>
+              </div>
             </div>
-          </div>
-          <div>
-            <router-link :to="
-                            {
-                              path: '/dashboard/clientProfile',
-                              props: client,
-                              query: { id: client.idclients },
-                              }" >
-              <p style="cursor: pointer">VIEW</p>
-            </router-link>
+            <div>
+              <router-link
+                :to="{
+                  path: '/dashboard/clientProfile',
+                  props: client,
+                  query: { id: client.idclients },
+                }"
+              >
+                <p style="cursor: pointer">VIEW</p>
+              </router-link>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   </div>
@@ -111,50 +124,44 @@ export default {
   name: "search",
   data() {
     return {
-       clientList: {},
-       search:"",
-       isLoading: true
-    }
+      clientList: {},
+      search: "",
+      isLoading: true,
+    };
   },
   created() {
     this.$apollo
-        .query({
-          // Query
-          query: gql`
-            query getOffences {
-              getOffences {
-                idclients
-                fullname
-                idnumber
-              }
+      .query({
+        // Query
+        query: gql`
+          query getOffences {
+            getOffences {
+              idclients
+              fullname
+              idnumber
             }
-          `,
-        })
-        .then(({ data }) => {
-          this.isLoading = false;
-          this.clientList = data.getOffences;
-
-        })
-        .catch((err) => {
-          this.isLoading = false;
-          this.toast.error(err.message || "Something went wrong", {
-            timeout: 2000,
-          });
+          }
+        `,
+      })
+      .then(({ data }) => {
+        this.isLoading = false;
+        this.clientList = data.getOffences;
+      })
+      .catch((err) => {
+        this.isLoading = false;
+        this.toast.error(err.message || "Something went wrong", {
+          timeout: 2000,
         });
-
+      });
   },
-  methods : {
-     search_offenses() {
+  methods: {
+    search_offenses() {
       this.$apollo
         .query({
           // Query
           query: gql`
-            query searchOffences (
-              $searchQuery: String
-            ){
-              searchOffences (
-                searchQuery: $searchQuery
-              ) {
+            query searchOffences($searchQuery: String) {
+              searchOffences(searchQuery: $searchQuery) {
                 idclients
                 fullname
                 idnumber
@@ -169,7 +176,6 @@ export default {
         .then(({ data }) => {
           this.isLoading = false;
           this.clientList = data.searchOffences;
-
         })
         .catch((err) => {
           this.isLoading = false;
@@ -177,10 +183,9 @@ export default {
             timeout: 2000,
           });
         });
-
-     } 
-  }
- };
+    },
+  },
+};
 </script>
 
 <style scoped>
