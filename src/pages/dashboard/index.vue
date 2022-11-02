@@ -24,6 +24,7 @@
       <div class="button">
         <router-link to="/dashboard/listOffender">
           <div class="link-item active">
+            <img class="link-icon" src="@/assets/immigration.png" />
             <span class="link-text">LIST OFFENDER</span>
           </div>
         </router-link>
@@ -32,7 +33,8 @@
       <div class="button">
         <router-link to="/dashboard/search">
           <div class="link-item active">
-            <span class="link-text">SEARCH</span>
+            <img class="link-icon" src="@/assets/search.png" />
+            <span class="link-text">SEARCH OFFENDER</span>
           </div>
         </router-link>
       </div>
@@ -40,6 +42,7 @@
       <div class="button">
         <router-link to="/dashboard/reports">
           <div class="link-item active">
+            <img class="link-icon" src="@/assets/verification.png" />
             <span class="link-text">REPORTS</span>
           </div>
         </router-link>
@@ -79,9 +82,8 @@ export default {
 }
 
 .link-item:hover {
-  background-color: #c9c9c9;
   transition: 100ms linear;
-  box-shadow: 0px 0px 20px gray;
+  box-shadow: 0px 0px 20px rgb(184, 2, 2);
   margin-top: -5px;
   height: 210px;
   width: 210px;

@@ -31,7 +31,7 @@
           v-model="search"
         />
 
-        <button
+        <!-- <button
           type="submit"
           class="
             p-2.5
@@ -59,7 +59,7 @@
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             ></path>
           </svg>
-        </button>
+        </button> -->
       </div>
     </div>
     <div style="display: flex; flex-direction: column; justify-content: center">
@@ -68,7 +68,7 @@
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
-          margin-top: 20px;
+          margin-top: 10px;
           padding: 0 5%;
         "
       >
@@ -102,7 +102,7 @@
             <div>
               <router-link
                 :to="{
-                  path: '/dashboard/clientProfile',
+                  path: '/dashboard/offenderProfile',
                   props: client,
                   query: { id: client.idclients },
                 }"

@@ -72,28 +72,35 @@
           </ul>
         </div>
 
-        <div style="display: flex; margin-top: 20px">
+        <div style="display: flex; margin: 20px 20px">
           <div
             style="
-              height: 40px;
-              width: 40px;
+              height: 26px;
+              width: 26px;
               border-radius: 100%;
               cursor: pointer;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
             "
-            v-on:click="this.$router.push('/login')"
+            v-on:click="logout"
           >
-            <img src="@/assets/logout.svg" alt="" />
+            <img src="@/assets/padlock.png" alt="" />
+            <h4 style="cursor: pointer; font-size: 15px" v-on:click="logout">
+              LOCK
+            </h4>
           </div>
           <div
             style="
               display: flex;
               flex-direction: column;
               justify-content: center;
-              margin-left: 10px;
+              height: 100%;
+              margin-left: 50px;
+              max-width: 300px;
             "
           >
             <h4>{{ username }}</h4>
-            <h4 style="cursor: pointer" v-on:click="logout">Log out</h4>
           </div>
         </div>
       </div>

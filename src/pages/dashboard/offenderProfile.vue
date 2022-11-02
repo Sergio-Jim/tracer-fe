@@ -44,7 +44,7 @@
             margin: 50px;
           "
         >
-          <div style="font-size: 20px; margin: 20px 0">Client Profile</div>
+          <div style="font-size: 20px; margin: 20px 0">Offender Profile</div>
           <form action="">
             <!-- client info -->
             <div style="display: flex; flex-direction: row">
