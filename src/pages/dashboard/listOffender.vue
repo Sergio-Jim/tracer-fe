@@ -2,7 +2,7 @@
   <div style="padding: 20px 30px; height: 100%; overflow-y: scroll">
     <div style="display: flex; flex-direction: row; justify-content: center">
       <div style="display: flex; flex-direction: row">
-        <span style="padding: 10px; font-size: xx-large">List Client</span>
+        <span style="padding: 10px; font-size: xx-large">List Offender</span>
       </div>
     </div>
 
@@ -400,6 +400,7 @@
               <div
                 style="
                   display: flex;
+
                   flex-direction: row;
                   width: 100%;
                   justify-content: center;
@@ -445,7 +446,7 @@ import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 
 export default {
-  name: "ListClient",
+  name: "ListOffender",
   data() {
     return {
       isLoading: false,

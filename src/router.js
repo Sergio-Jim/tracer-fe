@@ -3,9 +3,9 @@ import Login from "./pages/login.vue";
 import Register from "./pages/register.vue";
 import Dashboard from "./pages/dashboard";
 import DashboardMain from "./pages/dashboard/index.vue";
-import ListClient from "./pages/dashboard/listClient.vue";
+import ListOffender from "./pages/dashboard/listOffender.vue";
 import Search from "./pages/dashboard/search.vue";
-import ClientProfile from "./pages/dashboard/clientProfile.vue";
+import OffenderProfile from "./pages/dashboard/offenderProfile.vue";
 import Reports from "./pages/dashboard/reports.vue";
 import axios from "axios";
 
@@ -49,7 +49,9 @@ const routes = [
           method: "GET",
           headers,
           url:
-            process.env.NODE_ENV == "production" ? "https://tracer-api-xjm95.ondigitalocean.app" : "http://localhost:4000",
+            process.env.NODE_ENV == "production"
+              ? "https://tracer-api-xjm95.ondigitalocean.app"
+              : "http://localhost:4000",
         })
           .then((res) => {
             if (res.data.success) next();
@@ -70,18 +72,18 @@ const routes = [
         component: DashboardMain,
       },
       {
-        path: "listClient",
-        component: ListClient,
+        path: "listOffender",
+        component: ListOffender,
       },
       {
         path: "search",
         component: Search,
-        props: true
+        props: true,
       },
       {
-        path: "clientProfile",
-        component: ClientProfile,
-        props: true
+        path: "offenderProfile",
+        component: OffenderProfile,
+        props: true,
       },
       {
         path: "reports",

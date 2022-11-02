@@ -44,10 +44,12 @@
               to="/dashboard/listClient"
               v-bind:style="{
                 fontWeight:
-                  this.$route.path === '/dashboard/listClient' ? 'bolder' : '',
+                  this.$route.path === '/dashboard/listOffender'
+                    ? 'bolder'
+                    : '',
               }"
               ><div style="display: flex; flex-direction: row">
-                <span style="padding: 10px">List Client</span>
+                <span style="padding: 10px">List Offender</span>
               </div></router-link
             >
           </li>
@@ -100,9 +102,7 @@
           "
         >
           <h4>{{ username }}</h4>
-          <h4 style="cursor: pointer" v-on:click="logout">
-            Log out
-          </h4>
+          <h4 style="cursor: pointer" v-on:click="logout">Log out</h4>
         </div>
       </div>
     </div>
@@ -118,15 +118,15 @@ export default {
   name: "Launchpad",
   data() {
     return {
-      username : localStorage.getItem('username' ) 
-    }
+      username: localStorage.getItem("username"),
+    };
   },
-  methods : {
-    logout( ) {
+  methods: {
+    logout() {
       localStorage.clear();
       location.reload();
-    }
-  }
+    },
+  },
 };
 </script>
 

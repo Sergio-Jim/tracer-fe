@@ -1,5 +1,15 @@
 <template>
-  <div style="display: flex; flex-direction: row; height: 100%; width: 100%">
+  <div
+    :style="{
+      height: '100%',
+      width: '100%',
+      display: 'flex',
+      'flex-direction': `row`,
+      'background-image': `url(${require('@/assets/ELEMENT3.png')})`,
+      'background-repeat': `no-repeat`,
+      'background-position': `left bottom`,
+    }"
+  >
     <div
       style="
         flex-grow: 1;
@@ -7,7 +17,6 @@
         flex-direction: row;
         height: 100%;
         width: 100%;
-        background-color: #c9c9c9;
         align-items: center;
       "
     >
@@ -30,14 +39,12 @@
       style="display: flex; flex-direction: column; width: 100%; height: 100%"
     >
       <div
-        :style="{
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          'background-image': `url(${require('@/assets/finger.png')})`,
-          'background-repeat': `no-repeat`,
-          'background-position': `center left`,
-        }"
+        style="
+          height: 100%;
+          width: 100%;
+          display: flex;
+          background-position: center left;
+        "
       >
         <div
           style="
@@ -53,7 +60,7 @@
               display: flex;
               flex-direction: column;
               align-items: center;
-              border: 4px solid;
+              border: 2px solid;
               border-radius: 20px;
             "
           >

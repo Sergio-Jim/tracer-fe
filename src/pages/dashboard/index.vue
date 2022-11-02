@@ -22,9 +22,9 @@
     </div>
     <div class="link-group">
       <div class="button">
-        <router-link to="/dashboard/listclient">
+        <router-link to="/dashboard/listOffender">
           <div class="link-item active">
-            <span class="link-text">LIST CLIENT</span>
+            <span class="link-text">LIST OFFENDER</span>
           </div>
         </router-link>
       </div>

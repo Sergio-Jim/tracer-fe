@@ -1,98 +1,98 @@
 <template>
   <main>
-    <div style="margin: 50px">
+    <div style="margin: 30px">
       <div id="enter_credentials">
         <form>
-          <div style="margin: 15px 0">
-            <div :class="{ error: v$.username.$errors.length }">
-              <input
-                type="text"
-                v-model="username"
-                placeholder="Username"
-                class="
-                  shadow
-                  appearance-none
-                  border
-                  rounded
-                  w-full
-                  py-2
-                  px-3
-                  text-gray-700
-                  leading-tight
-                  focus:outline-none focus:shadow-outline
-                "
-              />
-              <div
-                class="input-errors text-sm px-1"
-                v-for="error of v$.username.$errors"
-                :key="error.$uid"
-              >
-                <div class="error-msg">Username Required</div>
+          <div style="margin: 60px 0">
+            <div style="margin: 15px 0">
+              <div :class="{ error: v$.username.$errors.length }">
+                <input
+                  type="text"
+                  v-model="username"
+                  placeholder="Username"
+                  class="
+                    shadow
+                    appearance-none
+                    border
+                    rounded
+                    w-full
+                    py-2
+                    px-3
+                    text-gray-700 text-center
+                  "
+                />
+                <div
+                  class="input-errors text-sm px-1"
+                  v-for="error of v$.username.$errors"
+                  :key="error.$uid"
+                >
+                  <div class="error-msg">Username Required</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin: 15px 0">
+              <div :class="{ error: v$.password.$errors.length }">
+                <input
+                  type="password"
+                  v-model="password"
+                  placeholder="Password"
+                  class="
+                    shadow
+                    appearance-none
+                    border
+                    rounded
+                    w-full
+                    py-2
+                    px-3
+                    text-gray-700 text-center
+                  "
+                />
+                <div
+                  class="input-errors text-sm px-1"
+                  v-for="error of v$.password.$errors"
+                  :key="error.$uid"
+                >
+                  <div class="error-msg">Password Required</div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div style="margin: 15px 0">
-            <div :class="{ error: v$.password.$errors.length }">
-              <input
-                type="password"
-                v-model="password"
-                placeholder="Password"
-                class="
-                  shadow
-                  appearance-none
-                  border
-                  rounded
-                  w-full
-                  py-2
-                  px-3
-                  text-gray-700
-                  leading-tight
-                  focus:outline-none focus:shadow-outline
-                "
-              />
-              <div
-                class="input-errors text-sm px-1"
-                v-for="error of v$.password.$errors"
-                :key="error.$uid"
-              >
-                <div class="error-msg">Password Required</div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            style="margin-top: 10px"
-            class="flex items-center justify-between"
-          >
+          <div style="margin: 60px 0">
             <div
-              :style="{
-                height: '50px',
-                width: '100%',
-                display: 'flex',
-                'background-image': `url(${require('@/assets/fingerprint.png')})`,
-                'background-repeat': `no-repeat`,
-                'background-position': `center center`,
-              }"
+              style="margin-top: 10px"
+              class="flex items-center justify-between"
             >
               <div
-                style="
-                  display: flex;
-                  flex-direction: row;
-                  width: 100%;
-                  justify-content: center;
-                  align-items: center;
-                "
+                :style="{
+                  height: '50px',
+                  width: '100%',
+                  display: 'flex',
+                  'background-image': `url(${require('@/assets/fingerprint.png')})`,
+                  'background-repeat': `no-repeat`,
+                  'background-position': `center center`,
+                }"
               >
-                <button style="height: 40px" v-on:click="login" type="button">
-                  <vue-loaders
-                    v-if="this.isLoading"
-                    name="ball-clip-rotate-pulse"
-                    color="red"
-                    scale="1"
-                  ></vue-loaders>
-                  <div class="py-2 text-red-800" v-else>Authenticate</div>
-                </button>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    width: 100%;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <button style="height: 40px" v-on:click="login" type="button">
+                    <vue-loaders
+                      v-if="this.isLoading"
+                      name="ball-clip-rotate-pulse"
+                      color="red"
+                      scale="1"
+                    ></vue-loaders>
+                    <div class="py-2 text-red-800" v-else>Authenticate</div>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -107,8 +107,10 @@
             margin: 10px 0;
           "
         >
-          <span>Unable to login? Contact Us</span>
-          <span>wow.co.na | +264 81 455 5528</span>
+          <span class="text-sm text-gray-700">Unable to login? Contact Us</span>
+          <span class="text-sm text-gray-700"
+            >wow.co.na | +264 81 455 5528</span
+          >
         </div>
       </div>
 
@@ -125,10 +127,8 @@
                 w-full
                 py-2
                 px-3
-                text-gray-700
+                text-gray-700 text-center
                 mb-3
-                leading-tight
-                focus:outline-none focus:shadow-outline
               "
               v-model="otp"
               placeholder="OTP"
