@@ -408,7 +408,7 @@
               >
                 <button
                   style="height: 40px"
-                  v-on:click="showModal = !showModal"
+                  v-on:click="sendOtp"
                   type="button"
                 >
                   <vue-loaders
@@ -493,7 +493,11 @@ export default {
   methods: {
     async createClient() {
       const isFormCorrect = await this.v$.$validate();
-      if (!isFormCorrect) return;
+      if (!isFormCorrect) {
+        this.showModal = false;
+        this.toast.error("Make sure all the fields are correct!");
+        return;
+      }
       this.isLoading = true;
       this.$apollo
         .mutate({
@@ -553,7 +557,33 @@ export default {
           this.toast.error("Oops! network error refresh page and try again.");
         });
     },
-
+    async sendOtp() {
+      this.$apollo
+      .query({
+        // Query
+        query: gql`
+          query requestOtp {
+            requestOtp
+          }
+        `,
+      })
+      .then(({ data }) => {
+        this.isLoading = false;
+        this.showModal = true;
+        this.toast.success(
+          "OTP sent to " + localStorage.getItem("phone_number"),
+          {
+            timeout: 2000,
+          }
+        );
+      })
+      .catch((err) => {
+        this.isLoading = false;
+        this.toast.error(err.message || "Something went wrong", {
+          timeout: 2000,
+        });
+      });
+    },
     async uploadDocument({ target }) {
       this.documents.push({ file: target.files[0] });
     },
