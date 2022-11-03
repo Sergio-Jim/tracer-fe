@@ -355,11 +355,10 @@
                     <div class="flex items-center justify-between">
                       <button
                         class="
-                          bg-tracergrey
                           transition-color
                           duration-700
                           transform
-                          hover:bg-tracergray
+                          hover:bg-tracergrey
                           border border-black
                           text-black
                           px-4
@@ -461,7 +460,8 @@ export default {
       mismangement_comments: "",
       is_unlawful: "",
       unlawfulness_comments: "",
-      picture: "@/assets/user-100.png",
+      picture:
+        "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png",
       documents: [],
       profile_picture: [],
     };

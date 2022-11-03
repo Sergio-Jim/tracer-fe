@@ -16,7 +16,7 @@
         margin: 50px 0;
       "
     >
-      <h3 style="font-size: 15px; font-weight: bold">
+      <h3 style="font-size: 15px; font-weight: bold; letter-spacing: 9pt">
         WHAT DO YOU WANT TO DO TODAY?
       </h3>
     </div>

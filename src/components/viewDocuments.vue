@@ -11,15 +11,29 @@
     "
     v-if="viewModal"
   >
-    <div class="relative wx-auto w-auto max-w-5xl">
+    <div class="relative w-6/12 wx-auto w-auto max-w-5xl">
       <div class="bg-white w-full rounded shadow-2xl flex flex-col">
         <!-- header -->
-        <div style="padding: 5px 20px" class="flex flex-row border-2">
-          <div>
-            <span>Client Name: </span>
-            <span> {{ fullName }}</span>
+        <div
+          style="padding: 5px 20px"
+          class="flex flex-row justify-between border-2"
+        >
+          <div
+            style="display: flex; flex-direction: column; font-size: x-large"
+          >
+            <span>Offender: </span>
+            <span style="font-weight: 700"> {{ fullName }}</span>
           </div>
-         
+          <div
+            style="display: flex; flex-direction: column; align-items: center"
+          >
+            <img
+              src="@/assets/TRACER_LOGO_ICON.png"
+              alt=""
+              style="width: 50px; height: 50px"
+            />
+            <span>TRACER</span>
+          </div>
         </div>
 
         <!-- body -->
@@ -62,7 +76,7 @@
                   </th>
                 </tr>
               </thead>
-              <tbody   v-for="dc in document"  :key="dc.id" >
+              <tbody v-for="dc in document" :key="dc.id">
                 <tr
                   class="
                     bg-white
@@ -81,10 +95,16 @@
                       whitespace-nowrap
                     "
                   >
-                  <a :href=" dc.document_name " target="_blank" >  {{ dc.document_name.split('/').pop() }} </a> 
+                    <a :href="dc.document_name" target="_blank">
+                      {{ dc.document_name.split("/").pop() }}
+                    </a>
                   </th>
-                  <td class="px-6 py-4">{{ dc.document_name.split('.').pop() }}</td>
-                  <td class="px-2 py-4">{{ dc.created }}</td>
+                  <td class="px-6 py-4">
+                    {{ dc.document_name.split(".").pop() }}
+                  </td>
+                  <td class="px-2 py-4">
+                    {{ new Date(parseInt(dc.created)).toUTCString() }}
+                  </td>
                   <td class="px-2 py-4">
                     <!-- <img
                       src="@/assets/cancel_icon.svg"
@@ -121,7 +141,7 @@
         </div>
 
         <!-- footer -->
-        <div style="padding: 5px 20px" class="flex flex-row">
+        <div style="padding: 5px 20px" class="flex flex-row justify-center">
           <div class="flex flex-row">
             <button
               class="
@@ -134,7 +154,6 @@
                 px-4
                 mx-1
                 border border-gray-400
-                rounded-lg
                 w-full
                 mb-3
               "
@@ -145,25 +164,29 @@
             </button>
             <button
               class="
-                bg-black
-                text-white
+                text-black
                 transition-colors
                 duration-700
                 transform
-                hover:bg-yellow-300 hover:text-black
+                hover:bg-tracergray
                 px-4
                 mx-1
                 border border-gray-400
-                rounded-lg
                 w-full
                 mb-3
               "
               onclick="document.getElementById('files').click()"
             >
               <div>
-                <input type="file" id="files" class="hidden"  @change="uploadDocuments" />
-                
-                Upload Documents</div>
+                <input
+                  type="file"
+                  id="files"
+                  class="hidden"
+                  @change="uploadDocuments"
+                />
+
+                Upload Documents
+              </div>
             </button>
           </div>
         </div>
@@ -181,10 +204,11 @@ import gql from "graphql-tag";
 
 export default {
   name: "viewDocuments",
-  props: { viewModal: { type: Boolean } , 
-           document: { type: Object } ,
-           fullName: { type: String }
-          },
+  props: {
+    viewModal: { type: Boolean },
+    document: { type: Object },
+    fullName: { type: String },
+  },
   data() {
     return {};
   },
@@ -193,22 +217,17 @@ export default {
       window.location.reload();
     },
     async uploadDocuments({ target }) {
-
       this.loading = true;
       await this.$apollo
         .mutate({
           mutation: gql`
-            mutation uploadDocument(
-                 $file: Upload!
-                 $id: String
-                 ) {
-              uploadDocument(file: $file, 
-              id:$id)
+            mutation uploadDocument($file: Upload!, $id: String) {
+              uploadDocument(file: $file, id: $id)
             }
           `,
           variables: {
             file: target.files[0],
-            id:  this.$route.query.id
+            id: this.$route.query.id,
           },
         })
         .then(({ data }) => {
