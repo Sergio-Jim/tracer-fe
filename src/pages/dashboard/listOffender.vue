@@ -408,7 +408,7 @@
               >
                 <button
                   style="height: 40px"
-                  v-on:click="verifyOtp"
+                  v-on:click="sendOtp"
                   type="button"
                 >
                   <vue-loaders
@@ -553,7 +553,7 @@ export default {
           this.toast.error("Oops! network error refresh page and try again.");
         });
     },
-    async verifyOtp() {
+    async sendOtp() {
       this.$apollo
       .query({
         // Query
