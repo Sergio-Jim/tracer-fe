@@ -30,22 +30,23 @@
         <div class="flex flex-col justify-center content-center">
           <form>
             <div style="margin: 30px">
-              <div class="pin-input">
-                <div id="divOuter">
-                  <div id="divInner">
-                    <input
-                      id="partitioned"
-                      placeholder="PIN"
-                      v-model="otp"
-                      type="text"
-                      maxlength="6"
-                      oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
-                      onKeyPress="if(this.value.length==6) return false;"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
+              <input
+                placeholder="PIN"
+                v-model="otp"
+                type="text"
+                maxlength="6"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+                onKeyPress="if(this.value.length==6) return false;"
+                required
+                class="
+                  focus:outline-none focus:ring focus:ring-white
+                  border-black border-b-4 border-t-0 border-r-0 border-l-0
+                  w-full
+                  py-2
+                  px-3
+                  text-gray-700 text-center
+                "
+              />
             </div>
 
             <div style="margin: 5px 0" class="flex items-center justify-center">

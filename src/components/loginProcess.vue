@@ -114,22 +114,24 @@
         <form form v-on:submit.prevent="verifyOtp">
           <span>OTP has been sent to {{ this.phone_number }}</span>
           <div style="margin: 30px 0">
-            <div class="pin-input">
-              <div id="divOuter">
-                <div id="divInner">
-                  <input
-                    id="partitioned"
-                    placeholder="PIN"
-                    v-model="otp"
-                    type="text"
-                    maxlength="6"
-                    oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
-                    onKeyPress="if(this.value.length==6) return false;"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
+            <input
+              placeholder="PIN"
+              v-model="otp"
+              type="text"
+              maxlength="6"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+              onKeyPress="if(this.value.length==6) return false;"
+              required
+              class="
+                focus:outline-none focus:ring focus:ring-white
+                border-black border-b-4 border-t-0 border-r-0 border-l-0
+                w-full
+                py-2
+                px-3
+                text-gray-700 text-center
+                tracking-widest
+              "
+            />
           </div>
 
           <div style="margin: 10px 0" class="flex items-center justify-center">
@@ -301,41 +303,4 @@ export default {
 </script>
 
 <style scoped>
-#partitioned {
-  text-align: center;
-  padding-top: 30px;
-  padding-bottom: 15px;
-  letter-spacing: 38px;
-  border: 0;
-  background-image: linear-gradient(to left, black 70%, black 0%);
-  background-color: white;
-  color: #3f3f3f;
-  background-position: bottom;
-  background-size: 50px 3px;
-  background-repeat: repeat-x;
-  background-position-x: 25px;
-  width: 320px;
-  min-width: 320px;
-  outline: none;
-  font-size: 100%;
-}
-#divInner {
-  left: 0;
-  position: sticky;
-}
-#divOuter {
-  width: 290px;
-  overflow: hidden;
-}
-.pin-input {
-  margin-left: 10px;
-}
-.input {
-  max-width: 245px;
-  border-radius: 0px;
-  color: white;
-  margin-top: 45px;
-  margin-bottom: 0px;
-  margin-left: 0px;
-}
 </style>
