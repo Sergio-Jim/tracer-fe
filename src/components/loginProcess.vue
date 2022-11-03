@@ -3,18 +3,16 @@
     <div style="margin: 30px">
       <div id="enter_credentials">
         <form>
-          <div style="margin: 60px 0">
-            <div style="margin: 15px 0">
+          <div style="margin: 80px 0">
+            <div style="margin: 20px 0">
               <div :class="{ error: v$.username.$errors.length }">
                 <input
                   type="text"
                   v-model="username"
                   placeholder="Username"
                   class="
-                    shadow
-                    appearance-none
-                    border
-                    rounded
+                    focus:outline-none focus:ring focus:ring-white
+                    border-black border-b-4 border-t-0 border-r-0 border-l-0
                     w-full
                     py-2
                     px-3
@@ -31,17 +29,15 @@
               </div>
             </div>
 
-            <div style="margin: 15px 0">
+            <div style="margin: 20px 0">
               <div :class="{ error: v$.password.$errors.length }">
                 <input
                   type="password"
                   v-model="password"
                   placeholder="Password"
                   class="
-                    shadow
-                    appearance-none
-                    border
-                    rounded
+                    focus:outline-none focus:ring focus:ring-white
+                    border-black border-b-4 border-t-0 border-r-0 border-l-0
                     w-full
                     py-2
                     px-3
@@ -139,15 +135,13 @@
           <div style="margin: 10px 0" class="flex items-center justify-center">
             <button
               class="
-                bg-tracergrey
                 transition-color
                 duration-700
                 transform
-                hover:bg-tracergray
+                hover:bg-tracergrey
                 border border-black
                 text-black
                 px-4
-                rounded-lg
               "
               style="height: 40px"
               type="submit"

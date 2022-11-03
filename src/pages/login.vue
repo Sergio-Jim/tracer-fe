@@ -61,6 +61,7 @@
               flex-direction: column;
               align-items: center;
               border: 2px solid;
+              border-color: #c9c9c9;
               border-radius: 20px;
             "
           >
