@@ -23,7 +23,7 @@
               style="height: 100%; width: 200px; margin: 5px"
             />
             <span style="font-size: 10px"
-              >CLIENT TRACING & REPORTING SYSTEM</span
+              >CREATING SAFE BUSINESS ENVIRONMENTS</span
             >
           </div>
         </div>

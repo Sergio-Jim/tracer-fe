@@ -28,8 +28,8 @@
             style="max-width: 60%"
           />
           <div style="margin-top: 10px">
-            <span style="font-size: 20px"
-              >CLIENT TRACING & REPORTING SYSTEM</span
+            <span style="font-size: 15px; letter-spacing: 5pt"
+              >CREATING SAFE BUSINESS ENVIRONMENTS</span
             >
           </div>
         </div>
