@@ -432,7 +432,7 @@
       </div>
     </div>
   </div>
-  <otpmodal v-bind:showModal="showModal" @hide-modal="showModal = false" />
+  <otpmodal v-bind:type="type" v-bind:showModal="showModal" @hide-modal="showModal = false" />
 </template>
 
 <script>
@@ -451,6 +451,7 @@ export default {
       isLoading: false,
       showText: 0,
       showModal: false,
+      type: "create",
       fullName: "",
       idNumber: "",
       drivingLicenseNo: "",

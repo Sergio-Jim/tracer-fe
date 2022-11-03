@@ -378,7 +378,7 @@
               >
                 <button
                   style="height: 40px"
-                  v-on:click="updateClient"
+                  v-on:click="sendOtp"
                   type="button"
                 >
                   <vue-loaders
@@ -411,7 +411,7 @@
     v-bind:viewModal="viewModal"
     @hide-modal="viewModal = false"
   />
-  <otpmodal v-bind:showModal="showModal" @hide-modal="showModal = false" />
+  <otpmodal  v-bind:type="type" v-bind:showModal="showModal" @hide-modal="showModal = false" />
 </template>
 
 <script>
@@ -433,6 +433,7 @@ export default {
       showText: 0,
       viewModal: false,
       showModal: false,
+      type: "update",
       fullName: "",
       idNumber: "",
       username: "",
@@ -648,6 +649,33 @@ export default {
             err + "Oops! network error refresh page and try again."
           );
         });
+    },
+    async sendOtp() {
+      this.$apollo
+      .query({
+        // Query
+        query: gql`
+          query requestOtp {
+            requestOtp
+          }
+        `,
+      })
+      .then(({ data }) => {
+        this.isLoading = false;
+        this.showModal = true;
+        this.toast.success(
+          "OTP sent to " + localStorage.getItem("phone_number"),
+          {
+            timeout: 2000,
+          }
+        );
+      })
+      .catch((err) => {
+        this.isLoading = false;
+        this.toast.error(err.message || "Something went wrong", {
+          timeout: 2000,
+        });
+      });
     },
     clearOverspeedingComment() {
       this.overspeeding_comments = "";

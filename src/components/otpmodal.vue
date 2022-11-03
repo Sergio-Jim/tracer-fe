@@ -102,7 +102,7 @@ import { useToast } from "vue-toastification";
 
 export default {
   name: "otpmodal",
-  props: { showModal: { type: Boolean } },
+  props: { showModal: { type: Boolean } , type: { type: String }},
   setup() {
     // Get toast interface
     const toast = useToast();
@@ -173,8 +173,10 @@ export default {
         })
         .then(({ status, message }) => {
           this.isLoading = false;
-          if (status) {
+          if (status && this.type == "create") {
             this.$parent.createClient();
+          } else if (status && this.type == "update") {
+            this.$parent.updateClient();
           } else {
              this.toast.error("Failed to verify otp incorrect.Please try again!");
           }
