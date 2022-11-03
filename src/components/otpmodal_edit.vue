@@ -101,7 +101,7 @@ import gql from "graphql-tag";
 import { useToast } from "vue-toastification";
 
 export default {
-  name: "otpmodal",
+  name: "otpmodal_edit",
   props: { showModal: { type: Boolean } },
   setup() {
     // Get toast interface
@@ -174,7 +174,7 @@ export default {
         .then(({ status, message }) => {
           this.isLoading = false;
           if (status) {
-            this.$parent.createClient();
+            this.$parent.updateClient();
           } else {
             this.toast.error(
               "Failed to verify. PIN incorrect. Please try again!"
@@ -193,41 +193,4 @@ export default {
 </script>
 
 <style scoped>
-#partitioned {
-  text-align: center;
-  padding-top: 30px;
-  padding-bottom: 15px;
-  letter-spacing: 38px;
-  border: 0;
-  background-image: linear-gradient(to left, black 70%, black 0%);
-  background-color: white;
-  color: #3f3f3f;
-  background-position: bottom;
-  background-size: 50px 3px;
-  background-repeat: repeat-x;
-  background-position-x: 25px;
-  width: 320px;
-  min-width: 320px;
-  outline: none;
-  font-size: 100%;
-}
-#divInner {
-  left: 0;
-  position: sticky;
-}
-#divOuter {
-  width: 290px;
-  overflow: hidden;
-}
-.pin-input {
-  margin-left: 10px;
-}
-.input {
-  max-width: 245px;
-  border-radius: 0px;
-  color: white;
-  margin-top: 45px;
-  margin-bottom: 0px;
-  margin-left: 0px;
-}
 </style>

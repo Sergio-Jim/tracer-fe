@@ -376,11 +376,7 @@
                   align-items: center;
                 "
               >
-                <button
-                  style="height: 40px"
-                  v-on:click="updateClient"
-                  type="button"
-                >
+                <button style="height: 40px" v-on:click="sendOtp" type="button">
                   <vue-loaders
                     v-if="this.isLoading"
                     name="ball-clip-rotate-pulse"
@@ -411,7 +407,7 @@
     v-bind:viewModal="viewModal"
     @hide-modal="viewModal = false"
   />
-  <otpmodal v-bind:showModal="showModal" @hide-modal="showModal = false" />
+  <otpmodal_edit v-bind:showModal="showModal" @hide-modal="showModal = false" />
 </template>
 
 <script>
@@ -419,8 +415,7 @@ import { ref } from "vue";
 import gql from "graphql-tag";
 import { useToast } from "vue-toastification";
 import ViewDocuments from "@/components/viewDocuments.vue";
-// import LitepieDatepicker from "litepie-datepicker";
-import otpmodal from "@/components/otpmodal.vue";
+import otpmodal_edit from "@/components/otpmodal_edit.vue";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 
@@ -452,7 +447,7 @@ export default {
   components: {
     // LitepieDatepicker,
     ViewDocuments,
-    otpmodal,
+    otpmodal_edit,
   },
   setup() {
     // Get toast interface
@@ -647,6 +642,33 @@ export default {
           this.toast.error(
             err + "Oops! network error refresh page and try again."
           );
+        });
+    },
+    async sendOtp() {
+      this.$apollo
+        .query({
+          // Query
+          query: gql`
+            query requestOtp {
+              requestOtp
+            }
+          `,
+        })
+        .then(({ data }) => {
+          this.isLoading = false;
+          this.showModal = true;
+          this.toast.success(
+            "OTP sent to " + localStorage.getItem("phone_number"),
+            {
+              timeout: 2000,
+            }
+          );
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.toast.error(err.message || "Something went wrong", {
+            timeout: 2000,
+          });
         });
     },
     clearOverspeedingComment() {
