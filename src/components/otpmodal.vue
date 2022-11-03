@@ -176,12 +176,12 @@ export default {
           if (status) {
             this.$parent.createClient();
           } else {
-            // this.toast.error(message);
+             this.toast.error("Failed to verify otp incorrect.Please try again!");
           }
         })
         .catch((err) => {
           this.isLoading = false;
-          // this.toast.error(err.message || "Something went wrong.");
+          this.toast.error("Something went wrong.refresh the page and try again!");
         });
     },
   },
