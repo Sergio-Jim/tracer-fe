@@ -493,7 +493,11 @@ export default {
   methods: {
     async createClient() {
       const isFormCorrect = await this.v$.$validate();
-      if (!isFormCorrect) return;
+      if (!isFormCorrect) {
+        this.showModal = false;
+        this.toast.error("Make sure all the fields are correct!");
+        return;
+      }
       this.isLoading = true;
       this.$apollo
         .mutate({
