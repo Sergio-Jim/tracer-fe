@@ -506,7 +506,7 @@ export default {
             mutation createOffence(
               $fullname: String!
               $idnumber: String!
-              $profile_picture: Upload!
+              $profile_picture: Upload
               $driving_licence_number: String!
               $offenses: [offense]
               $documents: [document]
