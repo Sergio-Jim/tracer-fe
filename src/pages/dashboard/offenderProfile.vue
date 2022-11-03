@@ -419,7 +419,6 @@ import { ref } from "vue";
 import gql from "graphql-tag";
 import { useToast } from "vue-toastification";
 import ViewDocuments from "@/components/viewDocuments.vue";
-// import LitepieDatepicker from "litepie-datepicker";
 import otpmodal from "@/components/otpmodal.vue";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";

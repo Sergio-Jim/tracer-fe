@@ -178,12 +178,16 @@ export default {
           } else if (status && this.type == "update") {
             this.$parent.updateClient();
           } else {
-             this.toast.error("Failed to verify otp incorrect.Please try again!");
+            this.toast.error(
+              "Failed to verify. PIN incorrect. Please try again!"
+            );
           }
         })
         .catch((err) => {
           this.isLoading = false;
-          this.toast.error("Something went wrong.refresh the page and try again!");
+          this.toast.error(
+            "Something went wrong. Refresh the page and try again!"
+          );
         });
     },
   },
