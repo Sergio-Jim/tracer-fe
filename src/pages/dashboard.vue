@@ -1,5 +1,6 @@
 <template>
   <div
+  
     :style="{
       height: '100vh',
       display: 'flex',
@@ -21,6 +22,7 @@
         "
       >
         <div
+          class= "invisible lg:visible " 
           style="
             display: flex;
             flex-direction: column;

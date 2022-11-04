@@ -1,16 +1,16 @@
 <template>
   <div
+     class = "flex lg:flex-row md:flex-col sm:flex flex-col"
     :style="{
       height: '100%',
       width: '100%',
-      display: 'flex',
-      'flex-direction': `row`,
       'background-image': `url(${require('@/assets/ELEMENT3.png')})`,
       'background-repeat': `no-repeat`,
       'background-position': `left bottom`,
     }"
   >
     <div
+      
       style="
         flex-grow: 1;
         display: flex;
@@ -20,7 +20,7 @@
         align-items: center;
       "
     >
-      <div style="flex-grow: 1; display: flex; flex-direction: column">
+      <div class="mb-24 flex justify-center" style="flex-grow: 1; display: flex; flex-direction: column">
         <div style="display: flex; flex-direction: column; align-items: center">
           <img
             src="../assets/TRACER_LOGO.png"
@@ -28,7 +28,7 @@
             style="max-width: 60%"
           />
           <div style="margin-top: 10px">
-            <span style="font-size: 15px; letter-spacing: 5pt"
+            <span class="text-center justify-center" style="font-size: 15px; letter-spacing: 5pt"
               >CREATING SAFE BUSINESS ENVIRONMENTS</span
             >
           </div>
@@ -36,6 +36,7 @@
       </div>
     </div>
     <div
+    class="mb-52"
       style="display: flex; flex-direction: column; width: 100%; height: 100%"
     >
       <div
