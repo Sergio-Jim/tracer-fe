@@ -1,6 +1,6 @@
 <template>
   <div
-     class = "flex lg:flex-row md:flex-col sm:flex flex-col"
+    class="flex lg:flex-row md:flex-col sm:flex flex-col"
     :style="{
       height: '100%',
       width: '100%',
@@ -10,7 +10,6 @@
     }"
   >
     <div
-      
       style="
         flex-grow: 1;
         display: flex;
@@ -20,15 +19,27 @@
         align-items: center;
       "
     >
-      <div class="mb-24 flex justify-center" style="flex-grow: 1; display: flex; flex-direction: column">
-        <div style="display: flex; flex-direction: column; align-items: center">
+      <div
+        class="mb-24 flex justify-center"
+        style="flex-grow: 1; display: flex; flex-direction: column"
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+          "
+        >
           <img
             src="../assets/TRACER_LOGO.png"
             alt="tracer-logo"
             style="max-width: 60%"
           />
-          <div style="margin-top: 10px">
-            <span class="text-center justify-center" style="font-size: 15px; letter-spacing: 5pt"
+          <div style="margin-top: 10px; display: flex">
+            <span
+              class="text-center justify-center"
+              style="font-size: 15px; letter-spacing: 5pt"
               >CREATING SAFE BUSINESS ENVIRONMENTS</span
             >
           </div>
@@ -36,7 +47,7 @@
       </div>
     </div>
     <div
-    class="mb-52"
+      class="mb-52"
       style="display: flex; flex-direction: column; width: 100%; height: 100%"
     >
       <div
