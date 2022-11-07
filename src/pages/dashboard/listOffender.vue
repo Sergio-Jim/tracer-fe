@@ -116,6 +116,7 @@
                   >
                     <input
                       type="text"
+                      oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
                       v-model="idNumber"
                       placeholder="ID NUMBER"
                       class="
@@ -144,6 +145,7 @@
                   >
                     <input
                       type="text"
+                      oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
                       v-model="drivingLicenseNo"
                       placeholder="DRIVING LICENSE NUMBER"
                       class="
@@ -406,11 +408,7 @@
                   align-items: center;
                 "
               >
-                <button
-                  style="height: 40px"
-                  v-on:click="sendOtp"
-                  type="button"
-                >
+                <button style="height: 40px" v-on:click="sendOtp" type="button">
                   <vue-loaders
                     v-if="this.isLoading"
                     name="ball-clip-rotate-pulse"
@@ -432,7 +430,11 @@
       </div>
     </div>
   </div>
-  <otpmodal v-bind:type="type" v-bind:showModal="showModal" @hide-modal="showModal = false" />
+  <otpmodal
+    v-bind:type="type"
+    v-bind:showModal="showModal"
+    @hide-modal="showModal = false"
+  />
 </template>
 
 <script>
@@ -560,30 +562,30 @@ export default {
     },
     async sendOtp() {
       this.$apollo
-      .query({
-        // Query
-        query: gql`
-          query requestOtp {
-            requestOtp
-          }
-        `,
-      })
-      .then(({ data }) => {
-        this.isLoading = false;
-        this.showModal = true;
-        this.toast.success(
-          "OTP sent to " + localStorage.getItem("phone_number"),
-          {
+        .query({
+          // Query
+          query: gql`
+            query requestOtp {
+              requestOtp
+            }
+          `,
+        })
+        .then(({ data }) => {
+          this.isLoading = false;
+          this.showModal = true;
+          this.toast.success(
+            "OTP sent to " + localStorage.getItem("phone_number"),
+            {
+              timeout: 2000,
+            }
+          );
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.toast.error(err.message || "Something went wrong", {
             timeout: 2000,
-          }
-        );
-      })
-      .catch((err) => {
-        this.isLoading = false;
-        this.toast.error(err.message || "Something went wrong", {
-          timeout: 2000,
+          });
         });
-      });
     },
     async uploadDocument({ target }) {
       this.documents.push({ file: target.files[0] });
