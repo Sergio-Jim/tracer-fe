@@ -1,7 +1,7 @@
 <template>
   <div style="padding: 20px 30px; height: 100%; overflow-y: scroll">
     <!-- search button -->
-    <div style="display: flex; flex-direction: column; margin: 5% 20%">
+    <div style="display: flex; flex-direction: column; margin: 2% 20%">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="search"
         >Search</label
       >
