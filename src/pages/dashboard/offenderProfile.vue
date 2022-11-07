@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 20px 30px; height: 100%; overflow-y: scroll">
+  <div style="height: 100%">
     <div style="display: flex; flex-direction: row; justify-content: center">
       <div
         style="
