@@ -1,6 +1,5 @@
 <template>
   <div
-  
     :style="{
       height: '100vh',
       display: 'flex',
@@ -10,119 +9,196 @@
       'background-position': `left bottom`,
     }"
   >
-    <div style="display: flex; flex-direction: row; height: 100%">
+    <!-- version 1 -->
+    <div class="relative flex min-h-screen">
       <div
-        style="
-          min-width: 20%;
-          display: flex;
-          flex-direction: column;
-          padding: 20px;
-          box-sizing: border-box;
-          justify-content: center;
+        class="
+          navbar
+          text-black
+          space-y-6
+          px-2
+          py-4
+          absolute
+          h-screen
+          md:relative md:-translate-x-0
+          top-0
+          flex flex-col
+          justify-between
         "
+        :class="showSidebar ? 'navbar-open' : 'navbar-close'"
       >
-        <div
-          class= "invisible lg:visible " 
-          style="
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            border-right: 2px solid;
-            border-color: red;
-            margin: 80px 0;
-            height: 100%;
-          "
-        >
-          <ul>
-            <li style="margin: 20px">
-              <router-link
-                to="/dashboard/"
-                v-bind:style="{
-                  fontWeight: this.$route.path === '/Home' ? 'bolder' : '',
-                }"
-                ><div style="display: flex; flex-direction: row">
-                  <span style="padding: 10px">Home</span>
-                </div>
-              </router-link>
-            </li>
-            <li style="margin: 20px">
-              <router-link
-                to="/dashboard/listOffender"
-                v-bind:style="{
-                  fontWeight:
-                    this.$route.path === '/dashboard/listOffender'
-                      ? 'bolder'
-                      : '',
-                }"
-                ><div style="display: flex; flex-direction: row">
-                  <span style="padding: 10px">List Offender</span>
-                </div></router-link
-              >
-            </li>
-            <li style="margin: 20px">
-              <router-link
-                to="/dashboard/search"
-                v-bind:style="{
-                  fontWeight:
-                    this.$route.path === '/dashboard/search' ? 'bolder' : '',
-                }"
-                ><div style="display: flex; flex-direction: row">
-                  <span style="padding: 10px">Search</span>
-                </div></router-link
-              >
-            </li>
-          </ul>
-        </div>
-
-        <div style="display: flex; margin: 20px 20px">
-          <div
-            style="
-              height: 26px;
-              width: 26px;
-              border-radius: 100%;
-              cursor: pointer;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-            "
-            v-on:click="logout"
-          >
-            <img src="@/assets/padlock.png" alt="" />
-            <h4 style="cursor: pointer; font-size: 15px" v-on:click="logout">
-              LOCK
-            </h4>
+        <div class="flex pr-2 justify-end">
+          <div class="p-2 text-white text-xl font-bold cursor-none">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
           </div>
-          <div
-            style="
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              height: 100%;
-              margin-left: 50px;
-              max-width: 300px;
-            "
-          >
-            <h4>{{ username }}</h4>
+        </div>
+        <ul style="padding: 30% 0; border-right: 2px solid; border-color: red">
+          <li v-on:click="showSidebar = false">
+            <router-link
+              to="/dashboard/"
+              v-bind:style="{
+                fontWeight: this.$route.path === '/Home' ? 'bolder' : '',
+              }"
+            >
+              <div
+                class="
+                  group
+                  flex
+                  items-center
+                  space-x-2
+                  py-3
+                  px-4
+                  hover:bg-tracergrey
+                  rounded
+                  hover:text-red-700
+                  transition
+                  duration-200
+                "
+              >
+                <span class="text-black group-hover:text-red-700">Home</span>
+              </div>
+            </router-link>
+          </li>
+          <li v-on:click="showSidebar = false">
+            <router-link
+              to="/dashboard/listOffender"
+              v-bind:style="{
+                fontWeight:
+                  this.$route.path === '/dashboard/listOffender'
+                    ? 'bolder'
+                    : '',
+              }"
+            >
+              <div
+                class="
+                  group
+                  flex
+                  items-center
+                  space-x-2
+                  py-3
+                  px-4
+                  hover:bg-tracergrey
+                  rounded
+                  hover:text-red-700
+                  transition
+                  duration-200
+                "
+              >
+                <span class="text-black group-hover:text-red-700"
+                  >List Offender</span
+                >
+              </div>
+            </router-link>
+          </li>
+          <li v-on:click="showSidebar = false">
+            <router-link
+              to="/dashboard/search"
+              v-bind:style="{
+                fontWeight:
+                  this.$route.path === '/dashboard/search' ? 'bolder' : '',
+              }"
+            >
+              <div
+                class="
+                  group
+                  flex
+                  items-center
+                  space-x-2
+                  py-3
+                  px-4
+                  hover:bg-tracergrey
+                  rounded
+                  hover:text-red-700
+                  transition
+                  duration-200
+                "
+              >
+                <span class="text-black group-hover:text-red-700">Search</span>
+              </div>
+            </router-link>
+          </li>
+        </ul>
+
+        <div class="p-4">
+          <div class="flex flex-row justify-center">
+            <div
+              class="flex flex-col h-6 w-6 cursor-pointer items-center"
+              v-on:click="logout"
+            >
+              <img src="@/assets/padlock.png" alt="" />
+              <h4 style="cursor: pointer; font-size: 15px" v-on:click="logout">
+                LOCK
+              </h4>
+            </div>
+            <div class="flex flex-col h-full ml-12 max-w-xs">
+              <h4>{{ username }}</h4>
+            </div>
           </div>
         </div>
       </div>
+      <div class="flex-1 w-full">
+        <!-- // header -->
+        <div class="bg-white shadow px-2 py-4">
+          <button v-on:click="showSidebar = !showSidebar" class="text-red-700">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-8 h-8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
+              />
+            </svg>
+          </button>
+        </div>
 
-      <div style="box-sizing: border-box; flex-grow: 1">
-        <router-view></router-view>
+        <!-- //Content -->
+        <div class="p-8 h-full overflow-scroll">
+          <router-view></router-view>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
   name: "Launchpad",
   data() {
     return {
+      open: false,
       username: localStorage.getItem("username"),
     };
   },
+  setup() {
+    const showSidebar = ref(false);
+
+    return { showSidebar };
+  },
   methods: {
+    tog() {
+      this.open = !this.open;
+    },
     logout() {
       localStorage.clear();
       location.reload();
@@ -131,5 +207,22 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.navbar {
+  transition: all 330ms ease-out;
+}
+
+.navbar-open {
+  transform: translateX(0%);
+  position: relative;
+  width: 256px;
+  transition: all 330ms ease-in;
+}
+.navbar-close {
+  transform: translateX(-100%);
+  width: 0px;
+  display: none;
+  transition: all 330ms ease-out;
+}
 </style>
+

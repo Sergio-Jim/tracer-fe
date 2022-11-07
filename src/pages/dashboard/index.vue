@@ -4,7 +4,7 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      align-items: center;
       padding: 20px 30px;
     "
   >
@@ -91,13 +91,15 @@ export default {
 
 .link-group {
   display: flex;
-  justify-content: space-evenly;
-  max-height: 200px;
-  min-width: 800px;
-  margin-bottom: 50px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 10px;
+  width: 100%;
+  padding: 0 5%;
 }
 
 .button {
+  margin-top: 30px;
   max-width: 200px;
   position: relative;
 }
