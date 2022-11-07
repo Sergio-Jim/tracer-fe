@@ -13,6 +13,7 @@
           flex-direction: column;
           align-items: center;
           border: 2px solid;
+          margin-bottom: 20px;
         "
       >
         <div

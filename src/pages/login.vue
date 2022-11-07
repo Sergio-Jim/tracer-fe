@@ -2,7 +2,7 @@
   <div
     class="flex lg:flex-row md:flex-col sm:flex flex-col"
     :style="{
-      height: '100%',
+      height: '100vh',
       width: '100%',
       'background-image': `url(${require('@/assets/ELEMENT3.png')})`,
       'background-repeat': `no-repeat`,

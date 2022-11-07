@@ -13,7 +13,7 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        margin: 50px 0;
+        margin: 20px 0;
       "
     >
       <h3 style="font-size: 15px; font-weight: bold; letter-spacing: 9pt">

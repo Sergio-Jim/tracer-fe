@@ -1,6 +1,5 @@
 <template>
   <div
-    style="height: 100%"
     :style="{
       height: '100%',
       display: 'flex',
@@ -172,7 +171,7 @@
         </div>
 
         <!-- //Content -->
-        <div class="p-8 h-full overflow-scroll">
+        <div>
           <router-view></router-view>
         </div>
       </div>
