@@ -171,7 +171,7 @@
         </div>
 
         <!-- //Content -->
-        <div>
+        <div style="height: 90vh">
           <router-view></router-view>
         </div>
       </div>

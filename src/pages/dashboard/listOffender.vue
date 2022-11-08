@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%">
+  <div style="height: 100%; overflow-y: scroll">
     <div style="display: flex; flex-direction: row; justify-content: center">
       <div style="display: flex; flex-direction: row">
         <span style="padding: 10px; font-size: xx-large">List Offender</span>
