@@ -14,7 +14,7 @@
         flex-grow: 1;
         display: flex;
         flex-direction: row;
-        height: 100%;
+        height: 100vh;
         width: 100%;
         align-items: center;
       "
@@ -48,7 +48,7 @@
     </div>
     <div
       class="mb-52"
-      style="display: flex; flex-direction: column; width: 100%; height: 100%"
+      style="display: flex; flex-direction: column; width: 100%; height: 100vh"
     >
       <div
         style="
