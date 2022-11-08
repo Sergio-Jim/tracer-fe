@@ -16,9 +16,11 @@
         margin: 20px 0;
       "
     >
-      <h3 style="font-size: 15px; font-weight: bold; letter-spacing: 9pt">
-        WHAT DO YOU WANT TO DO TODAY?
-      </h3>
+      <span
+        class="text-center justify-center"
+        style="font-size: 15px; font-weight: bold; letter-spacing: 9pt"
+        >WHAT DO YOU WANT TO DO TODAY?</span
+      >
     </div>
     <div class="link-group">
       <div class="button">
