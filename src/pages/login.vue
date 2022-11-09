@@ -14,9 +14,10 @@
         flex-grow: 1;
         display: flex;
         flex-direction: row;
-        height: 100vh;
+        height: 90vh;
         width: 100%;
         align-items: center;
+        overflow-y: scroll;
       "
     >
       <div

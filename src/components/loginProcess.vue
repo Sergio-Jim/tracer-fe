@@ -112,7 +112,7 @@
 
       <div id="enter_otp" style="display: none">
         <form form v-on:submit.prevent="verifyOtp">
-          <div class="flex flex-col items-center">
+          <div class="flex flex-col items-center text-center justify-center">
             <span>A PIN has been sent to {{ this.phone_number }}</span>
             <span>Please enter that PIN to login</span>
           </div>
