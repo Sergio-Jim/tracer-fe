@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div style="margin: 30px">
+    <div style="margin: 2rem">
       <div id="enter_credentials">
         <form>
           <div style="margin: 80px 0">
