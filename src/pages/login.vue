@@ -14,7 +14,7 @@
         flex-grow: 1;
         display: flex;
         flex-direction: row;
-        height: 100vh;
+        height: 100%;
         width: 100%;
         align-items: center;
         overflow-y: scroll;
@@ -49,7 +49,7 @@
     </div>
     <div
       class="mb-52"
-      style="display: flex; flex-direction: column; width: 100%; height: 100vh"
+      style="display: flex; flex-direction: column; width: 100%; height: 100%"
     >
       <div
         style="
